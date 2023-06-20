@@ -3,7 +3,7 @@ package com.team4.caps.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-@Entity
+@MappedSuperclass
 @Data
 public class Person {
     @Id
@@ -35,5 +35,6 @@ public class Person {
     {
         return firstname+" "+lastname;
     }
+
 
 }
