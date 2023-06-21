@@ -1,7 +1,7 @@
 package com.team4.caps.controller.Admin;
 
-import com.team4.caps.model.Lecturer
-import com.team4.caps.service.LecturerService
+import com.team4.caps.model.Lecturer;
+import com.team4.caps.service.LecturerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
