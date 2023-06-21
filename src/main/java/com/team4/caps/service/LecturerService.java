@@ -57,6 +57,27 @@ public class LecturerService {
         return true;
     }
 
+    public Lecturer updateLecturer(Integer id, Lecturer updatedLecturer) throws Exception {
+        Lecturer lecturer = lecturerRepository.findById(id)
+                .orElseThrow(() -> new Exception("Lecturer not found with id: " + id));
 
+        lecturer.setUsername(updatedLecturer.getUsername());
+        lecturer.setBirthday(updatedLecturer.getBirthday());
+        lecturer.setGender(updatedLecturer.getGender());
+        lecturer.setFaculty(updatedLecturer.getFaculty());
+        lecturer.setFirstname(updatedLecturer.getFirstname());
+        lecturer.setLastname(updatedLecturer.getLastname());
+        lecturer.setPassword(updatedLecturer.getPassword());
+        lecturer.setSurname(updatedLecturer.getSurname());
+        lecturer.setAddress(updatedLecturer.getAddress());
+        lecturer.setContactNumber(updatedLecturer.getContactNumber());
+        lecturer.setEmail(updatedLecturer.getEmail());
+
+        return lecturerRepository.save(lecturer);
+    }
+
+    public Lecturer createLecturer(Lecturer lecturer) {
+        return lecturerRepository.save(lecturer);
+    }
 
 }
