@@ -1,4 +1,4 @@
-package com.team4.caps.service.;
+package com.team4.caps.service;
 
 import com.team4.caps.model.Student;
 import com.team4.caps.repository.StudentRepository;
