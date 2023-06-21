@@ -1,4 +1,4 @@
-package com.team4.caps.service;
+package com.team4.caps.service.;
 
 import com.team4.caps.model.Student;
 import com.team4.caps.repository.StudentRepository;
@@ -58,6 +58,30 @@ public class StudentService {
         return true;
     }
 
+    public Student createStudent(Student student) {
+        return studentRepository.save(student);
+    }
+
+    public Student updateStudent(Integer id, Student updatedStudent) throws Exception {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new Exception("Student not found with id: " + id));
+
+        student.setFirstname(updatedStudent.getFirstname());
+        student.setLastname(updatedStudent.getLastname());
+        student.setGender(updatedStudent.getGender());
+        student.setBirthday(updatedStudent.getBirthday());
+        student.setGpa(updatedStudent.getGpa());
+        student.setEnrollmentDate(updatedStudent.getEnrollmentDate());
+        student.setUsername(updatedStudent.getUsername());
+        student.setPassword(updatedStudent.getPassword());
+        student.setStudentfaculty(updatedStudent.getStudentfaculty());
+        student.setSurname(updatedStudent.getSurname());
+        student.setContactNumber(updatedStudent.getContactNumber());
+        student.setAddress(updatedStudent.getAddress());
+        student.setEmail(updatedStudent.getEmail());
+
+        return studentRepository.save(student);
+    }
 
 
 }

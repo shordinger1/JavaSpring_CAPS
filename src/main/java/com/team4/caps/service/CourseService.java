@@ -42,6 +42,10 @@ public class CourseService {
         return true;
     }
 
+    public Course createCourse(Course course) {
+        return courseRepository.save(course);
+    }
+
     public boolean updateCourseById(Integer id,Course updatedCourse)
     {
         Course course;
@@ -56,6 +60,20 @@ public class CourseService {
         course.setId(id);
         courseRepository.save(course);
         return true;
+    }
+
+    public Course updateCourse(Integer id, Course updatedCourse) throws Exception {
+        Course course = courseRepository.findById(id)
+                .orElseThrow(() -> new Exception("Course not found with id: " + id));
+
+        course.setId(updatedCourse.getId());
+        course.setCourseName(updatedCourse.getCourseName());
+        course.setCourseCredits(updatedCourse.getCourseCredits());
+        course.setCourseCapacity(updatedCourse.getCourseCapacity());
+        course.setCourseVacancy(updatedCourse.getCourseVacancy());
+        course.setCourseEnrollmentStatus(updatedCourse.getCourseEnrollmentStatus());
+
+        return courseRepository.save(course);
     }
 
 
