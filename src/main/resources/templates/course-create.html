@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Student Management System</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Course Management System</h1>
+        <hr>
+        <h2>Adding Course</h2>
+
+        <form action="#" th:action="@{/course/create}" th:object="${course}" method="post">
+
+            <!-- Add hidden form field to handle update -->
+            <input type="hidden" th:field="*{id}" />
+            <fieldset> Course ID: <input type="text" th:field="*{courseId}" class="form-control mb-4 col-4"> </fieldset>
+            <fieldset> Course Name:<input type="text" th:field="*{courseName}" class="form-control mb-4 col-4"></fieldset>
+            <fieldset> Course Capacity:<input type="text" th:field="*{courseCapacity}" class="form-control mb-4 col-4"></fieldset>
+            <fieldset> Fee:<input type="text" th:field="*{fee}" class="form-control mb-4 col-4"></fieldset>
+            <button type="submit" class="btn btn-info col-2">Add Course</button>
+        </form>
+
+        <hr>
+
+        <a th:href="@{/course/list}"> Back to Course List</a>
+    </div>
+</body>
+
+</html>

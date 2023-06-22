@@ -1,21 +1,24 @@
 package com.team4.caps.service;
 
+import com.team4.caps.model.CourseLecturer;
 import com.team4.caps.model.CourseStudent;
+import com.team4.caps.repository.CourseLecturerRepository;
 import com.team4.caps.repository.CourseStudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 public class CourseStudentService {
 
     private final CourseStudentRepository courseStudentRepository;
+    private final CourseLecturerService courseLecturerService;
 
     @Autowired
-    public CourseStudentService(CourseStudentRepository courseStudentRepository) {
+    public CourseStudentService(CourseStudentRepository courseStudentRepository, CourseLecturerService courseLecturerService) {
         this.courseStudentRepository = courseStudentRepository;
+        this.courseLecturerService = courseLecturerService;
     }
     public List<CourseStudent> getAllCourseStudents()
     {
@@ -29,29 +32,32 @@ public class CourseStudentService {
 
     public Boolean deleteCourseStudentById(Integer id)
     {
-        try{
-            var CourseStudent=courseStudentRepository.findById(id).orElseThrow();
+        if(courseStudentRepository.existsById(id)) {
+            courseStudentRepository.deleteById(id);
         }
-        catch (NoSuchElementException e)
-        {
-            return false;
-        }
-        courseStudentRepository.deleteById(id);
         return true;
     }
 
     public boolean updateCourseStudentById(Integer id,CourseStudent updatedCourseStudent)
     {
         CourseStudent courseStudent;
-        try{
-            courseStudent=courseStudentRepository.findById(id).orElseThrow();
+        if(courseStudentRepository.existsById(id)) {
+            courseStudent = updatedCourseStudent;
+            courseStudent.setId(id);
+            courseStudentRepository.save(courseStudent);
+            return true;
         }
-        catch (NoSuchElementException e)
-        {
+        return false;
+    }
+
+    public boolean createCourseStudentById(Integer id, CourseStudent courseStudent) {
+        if(courseStudentRepository.existsById(id)){
             return false;
         }
-        courseStudent=updatedCourseStudent;
-        courseStudent.setId(id);
+        Integer courseLecturerId=courseStudent.getCourseLecturer().getId();
+        CourseLecturer courseLecturer=courseLecturerService.getCourseLecturerById(courseLecturerId);
+        courseLecturer.setEnrolled(courseLecturer.getEnrolled()+1);
+        courseLecturerService.updateCourseLecturerById(courseLecturerId,courseLecturer);
         courseStudentRepository.save(courseStudent);
         return true;
     }

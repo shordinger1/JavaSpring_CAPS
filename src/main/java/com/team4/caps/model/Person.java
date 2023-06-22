@@ -10,31 +10,34 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY )
     private int id;
 
-    private String firstname;
+    private String firstname="_";
 
-    private String lastname;
+    private String lastname="_";
 
-    private String gender;
+    private String gender="_";
     @Temporal(TemporalType.DATE)
-    private Integer birthday;
+    private Long birthday= (long) -1;
 
-    @Column(unique = true)
-    private String username;
+    //@Column(unique = true)
+    private String username="_";
 
-    private String password;
+    private String password="_";
 
-    private String surname;
+    private String surname="_";
 
-    private String email;
+    private String email="_";
 
-    private String address;
+    private String address="_";
 
-    private String contactNumber;
+    private String contactNumber="_";
 
     public String getFullName()
     {
         return firstname+" "+lastname;
     }
+
+
+
 
 
 }

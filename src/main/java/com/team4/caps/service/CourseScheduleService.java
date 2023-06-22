@@ -28,25 +28,24 @@ public class CourseScheduleService {
     }
 
     public Boolean deleteCourseScheduleById(Integer id) {
-        try {
-            var CourseSchedule = courseScheduleRepository.findById(id).orElseThrow();
-        } catch (NoSuchElementException e) {
-            return false;
+        if(courseScheduleRepository.existsById(id)) {
+            courseScheduleRepository.deleteById(id);
         }
-        courseScheduleRepository.deleteById(id);
         return true;
     }
 
     public boolean updateCourseScheduleById(Integer id, CourseSchedule updatedCourseSchedule) {
         CourseSchedule courseSchedule;
-        try {
-            courseSchedule = courseScheduleRepository.findById(id).orElseThrow();
-        } catch (NoSuchElementException e) {
-            return false;
+        if(courseScheduleRepository.existsById(id)) {
+            courseSchedule = updatedCourseSchedule;
+            courseSchedule.setId(id);
+            courseScheduleRepository.save(courseSchedule);
+            return true;
         }
-        courseSchedule = updatedCourseSchedule;
-        courseSchedule.setId(id);
+        return false;
+    }
+
+    public void createCourseSchedule(CourseSchedule courseSchedule) {
         courseScheduleRepository.save(courseSchedule);
-        return true;
     }
 }

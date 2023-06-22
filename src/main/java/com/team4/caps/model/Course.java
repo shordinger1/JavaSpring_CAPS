@@ -15,8 +15,6 @@ public class Course{
 
     private Integer courseCredits;
 
-    private Integer courseCapacity;
-
     private Integer courseVacancy;
 
     private Boolean courseEnrollmentStatus;

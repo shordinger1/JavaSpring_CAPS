@@ -59,5 +59,7 @@ public class ScheduleService {
     }
 
 
-
+    public void createSchedule(Schedule schedule) {
+        scheduleRepository.save(schedule);
+    }
 }

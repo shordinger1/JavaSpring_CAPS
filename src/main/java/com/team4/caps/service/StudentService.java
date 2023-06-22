@@ -63,24 +63,12 @@ public class StudentService {
     }
 
     public Student updateStudent(Integer id, Student updatedStudent) throws Exception {
-        Student student = studentRepository.findById(id)
-                .orElseThrow(() -> new Exception("Student not found with id: " + id));
-
-        student.setFirstname(updatedStudent.getFirstname());
-        student.setLastname(updatedStudent.getLastname());
-        student.setGender(updatedStudent.getGender());
-        student.setBirthday(updatedStudent.getBirthday());
-        student.setGpa(updatedStudent.getGpa());
-        student.setEnrollmentDate(updatedStudent.getEnrollmentDate());
-        student.setUsername(updatedStudent.getUsername());
-        student.setPassword(updatedStudent.getPassword());
-        student.setStudentfaculty(updatedStudent.getStudentfaculty());
-        student.setSurname(updatedStudent.getSurname());
-        student.setContactNumber(updatedStudent.getContactNumber());
-        student.setAddress(updatedStudent.getAddress());
-        student.setEmail(updatedStudent.getEmail());
-
-        return studentRepository.save(student);
+        if(studentRepository.existsById(id)) {
+            var student = updatedStudent;
+            student.setId(id);
+            return studentRepository.save(student);
+        }
+        return null;
     }
 
 

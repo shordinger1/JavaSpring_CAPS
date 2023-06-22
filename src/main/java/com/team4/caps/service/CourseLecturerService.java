@@ -29,25 +29,20 @@ public class CourseLecturerService{
     }
 
     public Boolean deleteCourseLecturerById(Integer id) {
-        try {
-            var courseLecturer = courseLecturerRepository.findById(id).orElseThrow();
-        } catch (NoSuchElementException e) {
-            return false;
+        if(courseLecturerRepository.existsById(id)) {
+            courseLecturerRepository.deleteById(id);
         }
-        courseLecturerRepository.deleteById(id);
         return true;
     }
 
     public boolean updateCourseLecturerById(Integer id, CourseLecturer updatedCourseLecturer) {
         CourseLecturer courseLecturer;
-        try {
-            courseLecturer = courseLecturerRepository.findById(id).orElseThrow();
-        } catch (NoSuchElementException e) {
-            return false;
+        if(courseLecturerRepository.existsById(id)) {
+            courseLecturer = updatedCourseLecturer;
+            courseLecturer.setId(id);
+            courseLecturerRepository.save(courseLecturer);
+            return true;
         }
-        courseLecturer = updatedCourseLecturer;
-        courseLecturer.setId(id);
-        courseLecturerRepository.save(courseLecturer);
-        return true;
+        return false;
     }
 }

@@ -9,11 +9,15 @@ import java.util.Date;
 @Entity
 @Data
 public class Student extends Person{
-    private Integer enrollmentDate;
+    private Long enrollmentDate= 0L;
 
     @ManyToOne
     @JoinColumn(name = "student_faculty_id")
     private Faculty studentfaculty;
 
-    private Float gpa;
+    private Float gpa=0.0F;
+
+    public Student() {
+
+    }
 }

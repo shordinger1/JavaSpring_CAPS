@@ -17,4 +17,17 @@ public class CourseLecturer {
     @ManyToOne
     @JoinColumn(name ="lecturer_id")
     private Lecturer lecturer;
+
+    private Integer enrolled;
+
+    private Boolean status;
+
+    @ManyToOne
+    @JoinColumn(name = "classroom_id")
+    private Classroom classroom;
+
+    public Integer getCourseCapacity()
+    {
+        return classroom.getClassRoomSize();
+    }
 }

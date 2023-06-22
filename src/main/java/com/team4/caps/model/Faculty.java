@@ -9,5 +9,5 @@ public class Faculty {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String facultyName;
+    private String facultyName="_";
 }

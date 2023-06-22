@@ -2,6 +2,7 @@ package com.team4.caps.controller;
 
 import com.team4.caps.model.CourseSchedule;
 import com.team4.caps.service.CourseScheduleService;
+import com.team4.caps.service.ScheduleArrangement;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.ui.Model;
@@ -13,10 +14,12 @@ import org.springframework.web.bind.annotation.*;
 public class CourseScheduleController {
 
     private final CourseScheduleService courseScheduleService;
+    private final ScheduleArrangement arrangement;
 
     @Autowired
-    public CourseScheduleController(CourseScheduleService courseScheduleService) {
+    public CourseScheduleController(CourseScheduleService courseScheduleService, ScheduleArrangement arrangement) {
         this.courseScheduleService = courseScheduleService;
+        this.arrangement = arrangement;
     }
     @GetMapping("/all")
     public String getAllCourseSchedules(Model model)
@@ -49,4 +52,11 @@ public class CourseScheduleController {
         model.addAttribute("status",status);
         return "courseSchedules";
     }
+
+    @GetMapping("generate")
+    public boolean generate()
+    {
+        return arrangement.generate();
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.team4.caps.model;
 
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.Data;
 
 @Entity
@@ -11,13 +12,22 @@ public class CourseSchedule {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "course_id")
-    private Course course;
+    @JoinColumn(name = "course_lecturer_id")
+    private CourseLecturer courseLecturer;
 
     @ManyToOne
     @JoinColumn(name = "schedule_id")
     private Schedule schedule;
 
-    private String roomNumber;
+
+
+
+    public CourseSchedule(CourseLecturer courseLecturer, Schedule schedule) {
+        this.courseLecturer = courseLecturer;
+        this.schedule = schedule;
+    }
+
+
+
 
 }

@@ -1,0 +1,67 @@
+<!-- <!DOCTYPE html>
+  <html xmlns:th="http://www.thymeleaf.org">
+. . .
+   <body>
+      <h1 th:utext="#{productform.page.title}">Product Form</h1>
+      <form action="#" th:object="${student}" th:action="@{/student/save}" method="post">
+        
+        <fieldset> FirstName: <input type="text" th:field="*{firstname}"> </fieldset>
+        <fieldset> LastName: <input type="text" th:field="*{lastname}"> </fieldset>
+        <fieldset> Gender: <input type="text" th:field="*{gender}"> </fieldset>
+        <fieldset> Birthday: <input type="text" th:field="*{birthday}"> </fieldset>
+        <fieldset> Address: <input type="text" th:field="*{address}"> </fieldset>
+        <fieldset> PhoneNumber: <input type="text" th:field="*{contactnumber}"> </fieldset>
+        <fieldset> <button type="submit">Save</button> </fieldset>
+      </form>
+    </body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Student Management System</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<script>
+
+</script>
+<body>
+    <div class="container">
+        <h1>Student Management System</h1>
+        <hr>
+        <h2>Add Student</h2>
+
+        <form th:action="@{/addstudent}" th:object="${student}" method="post">
+
+            <!-- Add hidden form field to handle update -->
+            <input type="hidden" th:field="*{id}" />
+
+            <fieldset> First Name: <input type="text" th:field="*{firstname}" class="form-control mb-4 col-4"> </fieldset>
+
+            <fieldset> Last Name:<input type="text" th:field="*{lastname}" class="form-control mb-4 col-4"></fieldset>
+
+            <fieldset> Gender:<input type="text" th:field="*{gender}" class="form-control mb-4 col-4"></fieldset>
+
+            <fieldset> Address:<input type="text" th:field="*{address}" class="form-control mb-4 col-4"></fieldset>
+
+            <fieldset> D.O.B:<input type="text" th:field="*{birthday}" class="form-control mb-4 col-4"></fieldset>
+
+            <fieldset> Phone Number:<input type="text" th:field="*{contactNumber}" class="form-control mb-4 col-4"></fieldset>
+
+            <fieldset> email address:<input type="text" th:field="*{email}" class="form-control mb-4 col-4"></fieldset>
+
+            <button type="submit" class="btn btn-info col-2" onclick="">Add Student</button>
+        </form>
+
+        <hr>
+
+        <a th:href="@{/student/list}"> Back to Student List</a>
+    </div>
+</body>
+
+</html>
+

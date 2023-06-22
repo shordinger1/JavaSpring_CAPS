@@ -9,9 +9,10 @@ public class CourseStudent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @ManyToOne
-    @JoinColumn(name ="course_id")
-    private Course course;
+    @JoinColumn(name = "course_lecturer_id")
+    private CourseLecturer courseLecturer;
 
     @ManyToOne
     @JoinColumn(name ="student_id")

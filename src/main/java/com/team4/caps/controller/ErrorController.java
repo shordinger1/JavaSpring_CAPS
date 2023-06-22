@@ -10,11 +10,11 @@ public class ErrorController {
     {
         return "Error";
     }
-/*
+
     @GetMapping("/main")
     public String indexPage()
     {
         return "index";
     }
-*/
+
 }

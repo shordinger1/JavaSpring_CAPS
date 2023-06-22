@@ -31,14 +31,9 @@ public class CourseService {
 
     public Boolean deleteCourseById(Integer id)
     {
-        try{
-            var course=courseRepository.findById(id).orElseThrow();
+        if(courseRepository.existsById(id)) {
+            courseRepository.deleteById(id);
         }
-        catch (NoSuchElementException e)
-        {
-            return false;
-        }
-        courseRepository.deleteById(id);
         return true;
     }
 
@@ -49,32 +44,15 @@ public class CourseService {
     public boolean updateCourseById(Integer id,Course updatedCourse)
     {
         Course course;
-        try{
-            course=courseRepository.findById(id).orElseThrow();
+        if(courseRepository.existsById(id)) {
+            course = updatedCourse;
+            course.setId(id);
+            courseRepository.save(course);
+            return true;
         }
-        catch (NoSuchElementException e)
-        {
-            return false;
-        }
-        course=updatedCourse;
-        course.setId(id);
-        courseRepository.save(course);
-        return true;
+        return false;
     }
 
-    public Course updateCourse(Integer id, Course updatedCourse) throws Exception {
-        Course course = courseRepository.findById(id)
-                .orElseThrow(() -> new Exception("Course not found with id: " + id));
-
-        course.setId(updatedCourse.getId());
-        course.setCourseName(updatedCourse.getCourseName());
-        course.setCourseCredits(updatedCourse.getCourseCredits());
-        course.setCourseCapacity(updatedCourse.getCourseCapacity());
-        course.setCourseVacancy(updatedCourse.getCourseVacancy());
-        course.setCourseEnrollmentStatus(updatedCourse.getCourseEnrollmentStatus());
-
-        return courseRepository.save(course);
-    }
 
 
 

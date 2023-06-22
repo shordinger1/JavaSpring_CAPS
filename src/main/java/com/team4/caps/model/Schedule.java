@@ -16,4 +16,22 @@ public class Schedule{
     private Integer scheduleDayOfWeek;
     private Integer scheduleStartTime;
     private Integer scheduleEndTime;
+
+    public Schedule(int id, Integer scheduleDayOfWeek, Integer scheduleStartTime, Integer scheduleEndTime) {
+        this.id = id;
+        this.scheduleDayOfWeek = scheduleDayOfWeek;
+        this.scheduleStartTime = scheduleStartTime;
+        this.scheduleEndTime = scheduleEndTime;
+    }
+
+    public Schedule() {
+        id=0;
+
+    }
+
+    public boolean isAvailable()
+    {
+        return id==0;
+    }
+
 }
