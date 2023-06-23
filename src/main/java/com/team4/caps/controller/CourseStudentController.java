@@ -6,12 +6,12 @@ import com.team4.caps.service.CourseLecturerService;
 import com.team4.caps.service.CourseStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
-@RestController
-@RequestMapping("/course-students")
+@Controller
 public class CourseStudentController {
 
     private final CourseStudentService courseStudentService;
@@ -22,7 +22,7 @@ public class CourseStudentController {
         this.courseStudentService = courseStudentService;
         this.courseLecturerService = courseLecturerService;
     }
-    @GetMapping("/all")
+    @GetMapping("/studentCourse/all")
     public String getAllCourseStudents(Model model)
     {
         var courseStudents=courseStudentService.getAllCourseStudents();
@@ -30,15 +30,24 @@ public class CourseStudentController {
         return "CourseStudents";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/studentCourse/{id}")
     public String GetOneCourseStudent(@PathVariable Integer id,Model model)
     {
         var courseStudent=courseStudentService.getCourseStudentById(id);
         model.addAttribute("courseStudent_"+id.toString(),courseStudent);
         return "courseStudent";
     }
-
-    @PostMapping("/update/{id}")
+    //viewcourse-enrolment.html
+    @GetMapping("/studentCourse/courseLecturer/{id}")
+    public String GetAllCourseStudentByCourseLecturerId(@PathVariable Integer id,Model model)
+    {
+        var courseStudent=courseStudentService.getAllCourseStudents().stream().
+                filter(courseStudent1 -> courseStudent1.getCourseLecturer().getId()==id).toList();
+        model.addAttribute("courseStudents",courseStudent);
+        System.out.println(courseStudent);
+        return "viewcourse-enrolment";
+    }
+    @PostMapping("/studentCourse/update/{id}")
     public String updateCourseStudent(@RequestBody CourseStudent courseStudent, @PathVariable Integer id, Model model)
     {
         var status=courseStudentService.updateCourseStudentById(id,courseStudent);
@@ -46,7 +55,7 @@ public class CourseStudentController {
         return "courseStudents";
     }
 
-    @PostMapping("/add/{id}")
+    @PostMapping("/StudentCourse/add/{id}")
     public String createCourseStudent(@RequestBody CourseStudent courseStudent, @PathVariable Integer id, Model model)
     {
         CourseLecturer courseLecturer=courseLecturerService.getCourseLecturerById(courseStudent.getCourseLecturer().getId());
@@ -59,7 +68,7 @@ public class CourseStudentController {
         return "courseStudents";
     }
 
-    @GetMapping ("delete/{id}")
+    @GetMapping ("/StudentCourse/delete/{id}")
     public String deleteCourseStudent(@PathVariable Integer id,Model model)
     {
         var status=courseStudentService.deleteCourseStudentById(id);

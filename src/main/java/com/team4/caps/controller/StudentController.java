@@ -41,6 +41,15 @@ public class StudentController {
     }
 
 
+    @GetMapping("student/update/{id}")
+    public String redirectEditStudent(@PathVariable Integer id,Model model)
+    {
+        Student student=studentService.getStudentById(id);
+        model.addAttribute("student",student);
+        //model.addAttribute("header","Content-Type:application/json;charset=UTF-8");
+        return "student-edit";
+    }
+
     @GetMapping("student/{id}")
     public String GetOneStudent(@PathVariable Integer id,Model model)
     {
@@ -63,13 +72,22 @@ public class StudentController {
         student.setEnrollmentDate((date.getTime()));
         var status=studentService.createStudent(student);
         model.addAttribute("status",status);
-        model.addAttribute("students",student);
+        List<Student> students=new ArrayList<>();
+        students.add(student);
+        model.addAttribute("students",students);
         return "students";
     }
 
-    @PostMapping("/update/{id}")
-    public String updateStudent(@ModelAttribute Student student, @PathVariable Integer id, Model model)
-    {
+    @PostMapping("student/edit/{id}")
+    public String updateStudent(@ModelAttribute Student student, @PathVariable Integer id, Model model) throws IllegalAccessException {
+        var studentBefore=studentService.getStudentById(id);
+        for(var param:Student.class.getDeclaredFields())
+        {
+            param.setAccessible(true);
+            if(param.get(student)!=null) {
+                param.set(student, param.get(studentBefore));
+            }
+        }
         student.setPassword(SecurityConfig.encoder(student.getPassword()));
         var status=studentService.updateStudentById(id,student);
         List<Student> students=new ArrayList<>();
@@ -78,12 +96,14 @@ public class StudentController {
         return "students";
     }
 
-    @GetMapping ("delete/{id}")
+    @GetMapping ("student/delete/{id}")
     public String deleteStudent(@PathVariable Integer id,Model model)
     {
         var status=studentService.deleteStudentById(id);
-        model.addAttribute("status",status);
-        return "_";
+        var students=studentService.getAllStudents();
+        //model.addAttribute("status",status);
+        model.addAttribute("students",students);
+        return "students";
     }
 
 }

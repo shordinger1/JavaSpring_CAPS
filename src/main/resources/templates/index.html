@@ -1,0 +1,136 @@
+<!doctype html>
+<html class="no-js" lang="" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Welcome to CAPS</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--    &lt;!&ndash; Favicon &ndash;&gt;
+      <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">-->
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" th:href="@{/css/bootstrap-rtl.min.css}">
+  <!-- Fontawesome CSS -->
+  <!--    <link rel="stylesheet" th:href="@{/css/fontawesome-all.min.css}">-->
+  <!-- Flaticon CSS -->
+  <link rel="stylesheet" th:href="@{/font/flaticon.css}">
+  <!-- Google Web Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet"th:href="@{/css/style.css}">
+</head>
+
+<body>
+<div id="preloader" class="preloader">
+  <div class='inner'>
+    <div class='line1'></div>
+    <div class='line2'></div>
+    <div class='line3'></div>
+  </div>
+</div>
+<section class="fxt-template-layout19">
+  <div class="container-fluid">
+
+    <div class="row">
+      <!--            封面-->
+      <div class="col-md-6 col-12 fxt-bg-img" th:data-bg-image="@{/img/login-background.jpg}">
+        <div class="fxt-header">
+
+          <!--                    <a href="login-19.html" class="fxt-logo"><img src="img/logo-19.png" alt="Logo"></a>-->
+          <h1>Welcome To CAPS</h1>
+
+          <!--                    <h1>Online S/U Option Declaration Exercise – Semester 2, AY2022/2023</h1>-->
+          <!--                    <p style="text-align: left;">To: All Undergraduate students excluding students from Dentistry,-->
+          <!--                        Law, Medicine (except Nursing) and Yale-NUS College-->
+          <!--                        (Yale-NUS College students – The appended information is not applicable to you.-->
+          <!--                        Please refer to the instructions sent by the Yale-NUS Registry).</p>-->
+          <!--                    <br>-->
+          <!--                    <p style="text-align: left;">The S/U Option Declaration Exercise for Semester 2, AY2022/2023 will be held from 29 May 2023 (upon release of results) to 31 May 2023, 6pm.-->
+          <!--                        Please refer to the email dated 9 May 2023 for further information.</p>-->
+          <!--                    <br>-->
+          <!--                    <p style="text-align: left;">Thank you.</p>-->
+          <!--                    <br>-->
+          <!--                    <p style="text-align: left;">Registry Circular Manager</p>-->
+          <!--                    <p style="text-align: left;">On behalf of the S/U Declaration Team</p>-->
+
+
+          <!--<a href="register-19.html" class="fxt-btn-ghost">Register</a>-->
+          <!--                    <div class="fxt-accordion-container">-->
+          <!--                        <div class="fxt-accordion">-->
+          <!--                            <h3>Accordion 1</h3>-->
+          <!--                            <select>-->
+          <!--                                &lt;!&ndash; 选项列表 &ndash;&gt;-->
+          <!--                            </select>-->
+          <!--                        </div>-->
+          <!--                        <div class="fxt-accordion">-->
+          <!--                            <h3>Accordion 2</h3>-->
+          <!--                            <select>-->
+          <!--                                &lt;!&ndash; 选项列表 &ndash;&gt;-->
+          <!--                            </select>-->
+          <!--                        </div>-->
+          <!--                    </div>-->
+
+
+        </div>
+      </div>
+      <div class="col-md-6 col-12 fxt-bg-color">
+        <div class="fxt-content">
+          <div class="fxt-form">
+            <h2>Course Application Processing Systems</h2>
+            <form method="POST" action="/login">
+              <div class="form-group">
+                <div class="fxt-transformY-50 fxt-transition-delay-3">
+                  <select name="type" class="form-select form-select-lg mb-3" style="color: #646464" aria-label=".form-select-lg example" >
+                    <option value="-1">Choose login type</option>
+                    <option value="Student">Student</option>
+                    <option value="Lecturer">Lecturer</option>
+                    <option value="Admin">Admin</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="fxt-transformY-50 fxt-transition-delay-3">
+                  <input type="text" class="form-control" name="username" placeholder="Username" >
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="fxt-transformY-50 fxt-transition-delay-4">
+                  <input id="password" type="password" class="form-control" name="password" placeholder="********">
+                  <i toggle="#password" class="fa fa-fw fa-eye toggle-password field-icon"></i>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="fxt-transformY-50 fxt-transition-delay-5">
+                  <div class="text-center">
+                    <button type="submit" class="fxt-btn-fill">Login</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<footer class="p-3 bg-white text-dark text-center">
+  <div class="container">
+    <p class="lead">Copyright &copy; NUS-ISS SA56 Team4</p>
+  </div>
+</footer>
+<!-- jquery-->
+<script th:src="@{/js/jquery-3.5.0.min.js}"></script>
+<!-- Bootstrap js -->
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<!-- Imagesloaded js -->
+<script th:src="@{/js/imagesloaded.pkgd.min.js}"></script>
+<!-- Validator js -->
+<script th:src="@{/js/validator.min.js}"></script>
+<!-- Custom Js -->
+<script th:src="@{/js/main.js}"></script>
+
+</body>
+
+</html>

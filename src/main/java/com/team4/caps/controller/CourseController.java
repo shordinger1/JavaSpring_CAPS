@@ -30,50 +30,45 @@ public class CourseController {
     }
 
     @GetMapping("/all")
-    public String getAllCourses(Model model)
-    {
-        var courses=courseService.getAllCourses();
-        model.addAttribute("courses",courses);
+    public String getAllCourses(Model model) {
+        var courses = courseService.getAllCourses();
+        model.addAttribute("courses", courses);
         //model.addAttribute("sessionId",session.getId());
         return "courses";
     }
-    
+
     @GetMapping("/{id}")
-    public String GetOneCourse(@PathVariable Integer id,Model model)
-    {
-        var course=courseService.getCourseById(id);
-        model.addAttribute("course_"+id.toString(),course);
+    public String GetOneCourse(@PathVariable Integer id, Model model) {
+        var course = courseService.getCourseById(id);
+        model.addAttribute("course_" + id.toString(), course);
         return "course";
     }
-    
+
     @PostMapping("/update/{id}")
-    public String updateCourse(@RequestBody Course course,@PathVariable Integer id,Model model)
-    {
-        var status=courseService.updateCourseById(id,course);
-        model.addAttribute("status",status);
+    public String updateCourse(@RequestBody Course course, @PathVariable Integer id, Model model) {
+        var status = courseService.updateCourseById(id, course);
+        model.addAttribute("status", status);
         return "courses";
     }
-    
-    @GetMapping ("delete/{id}")
-    public String deleteCourse(@PathVariable Integer id,Model model)
-    {
-        var courseStudents=courseStudentService.getAllCourseStudents();
-        for(var c:courseStudents)
-        {
-            if(c.getCourseLecturer().getCourse().getId()==id)courseStudentService.deleteCourseStudentById(c.getId());
+
+    @GetMapping("delete/{id}")
+    public String deleteCourse(@PathVariable Integer id, Model model) {
+        var courseStudents = courseStudentService.getAllCourseStudents();
+        for (var c : courseStudents) {
+            if (c.getCourseLecturer().getCourse().getId() == id)
+                courseStudentService.deleteCourseStudentById(c.getId());
         }
-        var courseSchedules=courseScheduleService.getAllCourseSchedules();
-        for(var c:courseSchedules)
-        {
-            if(c.getCourseLecturer().getCourse().getId()==id)courseScheduleService.deleteCourseScheduleById(c.getId());
+        var courseSchedules = courseScheduleService.getAllCourseSchedules();
+        for (var c : courseSchedules) {
+            if (c.getCourseLecturer().getCourse().getId() == id)
+                courseScheduleService.deleteCourseScheduleById(c.getId());
         }
-        var courseLecturers=courseLecturerService.getAllCourseLecturers();
-        for(var c:courseLecturers)
-        {
-            if(c.getCourse().getId()==id)courseLecturerService.deleteCourseLecturerById(c.getId());
+        var courseLecturers = courseLecturerService.getAllCourseLecturers();
+        for (var c : courseLecturers) {
+            if (c.getCourse().getId() == id) courseLecturerService.deleteCourseLecturerById(c.getId());
         }
-        var status=courseService.deleteCourseById(id);
-        model.addAttribute("status",status);
+        var status = courseService.deleteCourseById(id);
+        model.addAttribute("status", status);
         return "courses";
     }
 

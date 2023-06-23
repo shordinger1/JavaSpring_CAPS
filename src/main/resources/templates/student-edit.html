@@ -32,7 +32,7 @@
         <hr>
         <h2>Update Student</h2>
 
-        <form action="#" th:action="@{/student/update/{id}(id=${student.id})}" th:object="${student}" method="post">
+        <form action="#" th:action="@{/student/edit/{id}(id=${student.id})}" th:object="${student}" method="post">
 
             <!-- Add hidden form field to handle update -->
             <input type="hidden" th:field="*{id}" />
@@ -47,7 +47,7 @@
 
             <fieldset> D.O.B:<input type="text" th:field="*{birthday}" class="form-control mb-4 col-4"></fieldset>
 
-            <fieldset> Phone Number:<input type="text" th:field="*{contactnumber}" class="form-control mb-4 col-4"></fieldset>
+            <fieldset> Phone Number:<input type="text" th:field="*{contactNumber}" class="form-control mb-4 col-4"></fieldset>
 
             <button type="submit" class="btn btn-info col-2"> Update Employee</button>
         </form>

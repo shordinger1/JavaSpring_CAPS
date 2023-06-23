@@ -61,7 +61,7 @@ public class ScheduleArrangement {
                 scheduleService.createSchedule(schedules[i][j]);
                 lecturers[i][j].setClassroom(classrooms.get(j));
                 courseLecturerService.updateCourseLecturerById(lecturers[i][j].getId(),lecturers[i][j]);
-                courseScheduleService.createCourseSchedule(new CourseSchedule(lecturers[i][j],schedules[i][j]));
+                courseScheduleService.createCourseSchedule(new CourseSchedule(lecturers[i][j].getId(),schedules[i][j]));
             }
         }
         return true;

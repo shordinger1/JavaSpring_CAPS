@@ -36,7 +36,7 @@
                     <td th:text="${student.gender}"></td>
                     <td th:text="${student.address}"></td>
                     <td th:text="${student.contactNumber}"></td>
-                    <td> <a href="student-edit.html" th:href="@{/student/update/}+${student.id}" class="btn btn-primary">Update</a>
+                    <td><a href="student-edit.html" th:href="@{/student/update/}+${student.id}" class="btn btn-primary">Update</a>
                         <a href="students.html" th:href="@{/student/delete/}+${student.id}" class="btn btn-danger">Delete</a>
                     </td>
                 </tr>

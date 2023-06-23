@@ -15,9 +15,6 @@ public class Course{
 
     private Integer courseCredits;
 
-    private Integer courseVacancy;
-
-    private Boolean courseEnrollmentStatus;
     @ManyToOne
     @JoinColumn(name = "course_faculty_id")
     private Faculty faculty;

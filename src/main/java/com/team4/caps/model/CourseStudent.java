@@ -19,6 +19,5 @@ public class CourseStudent {
     private Student student;
 
     private Double grade;
-    private Integer status;
     private Integer requestStatus;
 }

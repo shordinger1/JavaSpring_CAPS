@@ -8,12 +8,7 @@ import lombok.Data;
 @Data
 public class CourseSchedule {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    @ManyToOne
-    @JoinColumn(name = "course_lecturer_id")
-    private CourseLecturer courseLecturer;
 
     @ManyToOne
     @JoinColumn(name = "schedule_id")
@@ -22,12 +17,13 @@ public class CourseSchedule {
 
 
 
-    public CourseSchedule(CourseLecturer courseLecturer, Schedule schedule) {
-        this.courseLecturer = courseLecturer;
+    public CourseSchedule(Integer id,Schedule schedule) {
+        this.id=id;
         this.schedule = schedule;
     }
 
 
+    public CourseSchedule() {
 
-
+    }
 }

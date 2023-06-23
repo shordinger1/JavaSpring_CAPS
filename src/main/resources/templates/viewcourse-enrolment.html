@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>The Lecturer Modlue</title>
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <style>
+        /* Custom CSS for tab button colors */
+        .nav-pills .nav-link.active,
+        .nav-pills .show > .nav-link {
+            background-color: lightseagreen;
+            color: white;
+        }
+
+        .nav-pills .nav-link {
+            color: lightseagreen;
+        }
+
+        .custom-button {
+            background-color: lightseagreen;
+            border: none;
+
+            /* Additional styles as needed */
+        }
+    </style>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" style="color: white; font-size: 30px;">CAPS</a>
+
+
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/students}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/students}">Admin Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/students}">Student Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/students}">Lecturer Login</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <p></p>
+                <a class="nav-link active" id="v-pills-ViewCoursesTaught-tab" data-toggle="pill"
+                   th:href="@{/courses-taught}" role="tab" aria-controls="v-pills-ViewCoursesTaught"
+                   aria-selected="true">View Courses Taught</a>
+                <p></p>
+                <a class="nav-link active" id="v-pills-View Course Enrolment" data-toggle="pill"
+                   href="#v-pills-ViewCourseEnrolment" role="tab" aria-controls="v-pills-ViewCourseEnrolment"
+                   aria-selected="true">View Course Enrolment</a>
+                <p></p>
+                <a class="nav-link active" id="v-pills-Grade a Course" data-toggle="pill"
+                   href="#v-pills-Grade a Courese" role="tab" aria-controls="v-pills-GradeACourse" aria-selected="true">Grade
+                    a Course</a>
+                <p></p>
+                <a class="nav-link active" id="v-pills-View a Student Performance" data-toggle="pill"
+                   href="#v-pills-ViewAStudentPerformance" role="tab" aria-controls="v-pills-ViewAStudentPerformance"
+                   aria-selected="true">View a Student Performance</a>
+                <p></p>
+                <a class="nav-link active" id="v-pills-Log Out" data-toggle="pill" href="#v-pills-LogOut" role="tab"
+                   aria-controls="v-pills-LogOut" aria-selected="true">Log Out</a>
+
+            </div>
+        </div>
+
+        <div class="col-9">
+
+            <div class="container my-2">
+                <h1>course enrolment details</h1>
+
+                <a th:href="@{/courses-taught}" class="btn btn-secondary btn-sm mb-3"
+                   style="background-color: lightseagreen; border: none; color: white;"> back to courses taught </a>
+
+                <table border="1" class="table table-striped table-responsive-md">
+                    <thead>
+                    <tr>
+                        <th> Student ID</th>
+                        <!-- can show with student full name ? -->
+                        <th> Student Full Name</th>
+                        <th> student email</th>
+                        <th> Student Contact Number</th>
+                        <th> Student Faculty</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr th:each="coursestudent : ${courseStudents}">
+                        <td th:text="${coursestudent.student.id}"></td>
+                        <!-- this is string method in entity can call directly like that? -->
+                        <td th:text="${coursestudent.student.getFullName()}"></td>
+                        <td th:text="${coursestudent.student.email}"></td>
+                        <td th:text="${coursestudent.student.contactNumber}"></td>
+                        <td th:text="${coursestudent.student.studentfaculty.facultyName}"></td>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

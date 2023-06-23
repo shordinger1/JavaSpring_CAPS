@@ -26,6 +26,9 @@ public class Schedule{
 
     public Schedule() {
         id=0;
+        scheduleEndTime=-1;
+        scheduleDayOfWeek=-1;
+        scheduleStartTime=-1;
 
     }
 

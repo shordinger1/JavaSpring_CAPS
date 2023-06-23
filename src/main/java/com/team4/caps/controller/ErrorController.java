@@ -6,14 +6,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ErrorController {
     @GetMapping("/error")
-    public String ErrorPage()
-    {
+    public String ErrorPage() {
         return "Error";
     }
 
     @GetMapping("/main")
-    public String indexPage()
-    {
+    public String indexPage() {
         return "index";
     }
 
