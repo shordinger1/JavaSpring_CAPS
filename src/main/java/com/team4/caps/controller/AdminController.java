@@ -1,10 +1,7 @@
 package com.team4.caps.controller;
 
 import com.team4.caps.config.SecurityConfig;
-import com.team4.caps.model.Course;
-import com.team4.caps.model.CourseLecturer;
-import com.team4.caps.model.CourseStudent;
-import com.team4.caps.model.Student;
+import com.team4.caps.model.*;
 import com.team4.caps.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,9 +38,9 @@ public class AdminController {
         String username = paraList[1].substring(9);
         String type = paraList[0].substring(5);
         password = SecurityConfig.encoder(password);
-        System.out.println(password);
-        System.out.println(username);
-        System.out.println(type);
+        //System.out.println(password);
+        //System.out.println(username);
+        //System.out.println(type);
         String finalPassword = password;
         switch (type) {
             case "Admin" -> {
@@ -54,7 +51,7 @@ public class AdminController {
                     session.setAttribute("username", username);
                     session.setAttribute("type", type);
                 } else return "index";
-                return "adminIndex";
+                return "redirect:/students";
 
             }
             case "Student" -> {
@@ -69,6 +66,8 @@ public class AdminController {
                     var coursesAlreadyEnrolled = courseStudentService.getAllCourseStudents().stream().filter(
                             courseStudent1 -> courseStudent1.getStudent().getId() == id).toList();
                     courses.removeAll(coursesAlreadyEnrolled.stream().map(CourseStudent::getCourseLecturer).toList());
+                    //courses.forEach(courseLecturer -> courseLecturer.setCourseSchedule(new CourseSchedule()));
+                    //coursesAlreadyEnrolled.forEach(courseLecturer -> courseLecturer.getCourseLecturer().setCourseSchedule(new CourseSchedule()));
                     model.addAttribute("courses",courses);
                     model.addAttribute("coursesAlreadyEnrolled",coursesAlreadyEnrolled);
                     model.addAttribute("course",new CourseLecturer());
@@ -87,7 +86,7 @@ public class AdminController {
                     session.setAttribute("username", username);
                     session.setAttribute("type", type);
                 } else return "index";
-                return "lecturerIndex";
+                return "redirect:/lecturer/course/"+lecturer.get(0).getId();
             }
             default -> {
                 return "index";
@@ -95,7 +94,7 @@ public class AdminController {
         }
     }
 
-    @PostMapping("/logout")
+    @GetMapping("/logout")
     public String logout(HttpSession session) {
         System.out.println(session.getId());
         System.out.println(session.getAttribute("username"));

@@ -52,9 +52,16 @@ public class CourseLecturerController {
         //Integer id= (Integer) session.getAttribute("id");
         List<CourseLecturer> coursesLecturer = courseLecturerService.getAllCourseLecturers().stream().filter(courseLecturer1 -> courseLecturer1.getLecturer().getId()==id).toList();
         model.addAttribute("courseLecturers",coursesLecturer);
-        //model.addAttribute("courses",coursesLecturer.stream().map(CourseLecturer::getCourse));
-        //model.addAttribute("classrooms",coursesLecturer.stream().map(CourseLecturer::getClassroom));
         return "coursesTaught";
+    }
+
+    @GetMapping("/courseGrade/{id}")
+    public String getGradeCourse(@PathVariable Integer id, Model model)
+    {
+        //Integer id= (Integer) session.getAttribute("id");
+        List<CourseLecturer> coursesLecturer = courseLecturerService.getAllCourseLecturers().stream().filter(courseLecturer1 -> courseLecturer1.getLecturer().getId()==id).toList();
+        model.addAttribute("courseLecturers",coursesLecturer);
+        return "grade-course-courses";
     }
 
 

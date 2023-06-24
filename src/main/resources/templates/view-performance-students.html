@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="ISO-8859-1">
+  <title>The Lecturer Module</title>
+
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+  <style>
+    /* Custom CSS for tab button colors */
+    .nav-pills .nav-link.active,
+    .nav-pills .show > .nav-link {
+      background-color: lightseagreen;
+      color: white;
+    }
+
+    .nav-pills .nav-link {
+      color: lightseagreen;
+    }
+
+    .custom-button {
+      background-color: lightseagreen;
+      border: none;
+
+      /* Additional styles as needed */
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(120%); }
+      50% { transform: translateX(0%); }
+    }
+
+    .navbar {
+      overflow: hidden;
+    }
+
+    .navbar-brand,
+    .navbar-nav {
+      display: inline-block;
+    }
+
+    .moving-text {
+      display: inline-block;
+      white-space: nowrap;
+      animation: bounce 7s linear infinite;
+      font-size: 40px;
+      color: white;
+    }
+    footer {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      background-color: lightgray; /* Adjust the background color as needed */
+      padding: 10px; /* Adjust the padding as needed */
+      text-align: center; /* Adjust the text alignment as needed */
+    }
+
+  </style>
+
+</head>
+
+<body>
+<!--<nav class="navbar navbar-expand-md bg-dark navbar-dark">-->
+<nav class="navbar navbar-expand-md navbar-light" style="background-color: lightseagreen;">
+  <!-- Brand -->
+  <img src="https://th.bing.com/th/id/R.12e91eada191070b23d272c2461d1d80?rik=aJDWMrh89h%2foTg&riu=http%3a%2f%2fcdn.onlinewebfonts.com%2fsvg%2fimg_554181.png&ehk=f9bsqbuePmFYo1Hsc%2b85jM8fsbZW7rmllZcpxuHG7h4%3d&risl=&pid=ImgRaw&r=0"
+       alt="Logo" width="60" height="60" class="logo-img">
+  <a class="navbar-brand" style="color: white; font-size: 30px;">CAPS</a>
+
+
+  <!-- Toggler/collapsibe Button -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="moving-text">
+    <span th:text="|hello ${session.username}|"></span>
+  </div>
+</nav>
+<div class="container">
+  <div class="row">
+    <div class="col-3">
+      <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+        <p></p>
+        <a class="nav-link active" id="v-pills-ViewCoursesTaught-tab" data-toggle="pill" th:href="@{/courses-taught}" role="tab" aria-controls="v-pills-ViewCoursesTaught" aria-selected="true">View Courses Taught</a>
+        <p></p>
+        <a class="nav-link active" id="v-pills-View Course Enrolment" data-toggle="pill" href="#v-pills-ViewCourseEnrolment" role="tab" aria-controls="v-pills-ViewCourseEnrolment" aria-selected="true">View Course Enrolment</a>
+        <p></p>
+        <a class="nav-link active" id="v-pills-Grade a Course" data-toggle="pill" href="/grade-course-courses.html" role="tab" aria-controls="v-pills-GradeACourse" aria-selected="true">Grade a Course</a>
+        <p></p>
+        <a class="nav-link active" id="v-pills-View a Student Performance" data-toggle="pill" href="/grade-course-courses.html" role="tab" aria-controls="v-pills-ViewAStudentPerformance" aria-selected="true">View a Student Performance</a>
+        <p></p>
+        <a class="nav-link active" id="v-pills-Log Out" data-toggle="pill" th:href="@{/logout}" role="tab" aria-controls="v-pills-LogOut" aria-selected="true">Log Out</a>
+
+      </div>
+    </div>
+    <div class="col-9">
+      <div class="tab-content" id="v-pills-tabContent">
+        <div class="tab-pane fade show active" id="v-pills-Profile" role="tabpanel" aria-labelledby="v-pills-Profile-tab">
+          <div class="container">
+            <h1>View Student Performance Details</h1>
+            <!--该表会展示老师所教授的某一门课中学生的list。list的属性包括学生的名字分数以及出勤率。-->
+            <table class="table table-striped table-responsive-md">
+              <tr th:text="${course.name}"></tr><!--这里-->
+              <tr>
+                <th>Student</th>
+                <th>Score</th>
+                <th>Attendance</th>
+              </tr>
+              <tr th:each="student : ${students}"><!--这里-->
+                <td th:text="${student.name}"></td><!--这里-->
+                <td th:text="${student.score}"></td><!--这里（如果没有分数请返回0）-->
+                <td th:text="${student.attendance}"></td><!--这里-->
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+</body>
+<footer class="footer">
+  &copy; <span th:text="2023"></span> www.caps.edu.sg
+  <strong><img src="https://www.pinclipart.com/picdir/big/405-4059078_png-file-svg-transparent-white-home-button-clipart.png" width="20" height="20" hspace="10"> Address:</strong> 25 Huang Mei Keng Terrance, Singapore
+  <strong><img src ="https://cdn0.iconfinder.com/data/icons/mini-icon-2-2/16/telephone-512.png" width="20" height="20" hspace="10"> Contact Number:</strong> 1234567890
+  <strong><img src="https://cdn.iconscout.com/icon/premium/png-512-thumb/mail-1772981-1508923.png" width="20" height="20" hspace="10">Email:</strong> example@example.com
+</footer>
+
+</html>

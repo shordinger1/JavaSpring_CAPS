@@ -44,8 +44,18 @@ public class CourseStudentController {
         var courseStudent=courseStudentService.getAllCourseStudents().stream().
                 filter(courseStudent1 -> courseStudent1.getCourseLecturer().getId()==id).toList();
         model.addAttribute("courseStudents",courseStudent);
-        System.out.println(courseStudent);
+        //ystem.out.println(courseStudent);
         return "viewcourse-enrolment";
+    }
+//for grade student
+    @GetMapping("/grade-course-students/{id}")
+    public String GetAllCourseStudentByCourseLecturerId2(@PathVariable Integer id,Model model)
+    {
+        var courseStudent=courseStudentService.getAllCourseStudents().stream().
+                filter(courseStudent1 -> courseStudent1.getCourseLecturer().getId()==id).toList();
+        model.addAttribute("courseStudents",courseStudent);
+        //System.out.println(courseStudent);
+        return "grade-course-students";
     }
     @PostMapping("/studentCourse/update/{id}")
     public String updateCourseStudent(@RequestBody CourseStudent courseStudent, @PathVariable Integer id, Model model)
@@ -53,6 +63,19 @@ public class CourseStudentController {
         var status=courseStudentService.updateCourseStudentById(id,courseStudent);
         model.addAttribute("status",status);
         return "courseStudents";
+    }
+
+
+    @PostMapping("/updateStudentGrade/{id}")
+    public String updateStudentCourse(@PathVariable Integer id,@RequestBody String body,Model model)
+    {
+        System.out.println(body);
+        Double grade=Double.valueOf(body.substring(6));
+        var courseStudent=courseStudentService.getCourseStudentById(id);
+        courseStudent.setGrade(grade);
+        var courseStudents=courseStudentService.getAllCourseStudents().stream().filter(courseStudent1 -> courseStudent1.getCourseLecturer()==courseStudent.getCourseLecturer()).toList();
+        model.addAttribute("updatedStudent",courseStudent);
+        return "grade-course-students";
     }
 
     @PostMapping("/StudentCourse/add/{id}")

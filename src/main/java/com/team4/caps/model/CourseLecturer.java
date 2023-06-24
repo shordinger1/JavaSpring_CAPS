@@ -32,4 +32,10 @@ public class CourseLecturer {
     {
         return classroom.getClassRoomSize();
     }
+
+    public CourseLecturer()
+    {
+        this.courseSchedule=new CourseSchedule();
+    }
+
 }

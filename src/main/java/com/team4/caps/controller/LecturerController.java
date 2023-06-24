@@ -35,28 +35,31 @@ public class LecturerController {
     @GetMapping("Lecturer/add")
     public String redirectAddLecturer(Model model)
     {
-        model.addAttribute("Lecturer",new Lecturer());
+        model.addAttribute("lecturer",new Lecturer());
         //model.addAttribute("header","Content-Type:application/json;charset=UTF-8");
         return "lecturerform";
     }
 
-
+//lecturer admin update
     @GetMapping("lecturer/update/{id}")
-    public String redirectEditStudent(@PathVariable Integer id,Model model)
+    public String redirectUpdateLecturer(@PathVariable Integer id,Model model)
     {
         Lecturer lecturer=lecturerService.getLecturerById(id);
-        model.addAttribute("student",lecturer);
+        model.addAttribute("lecturer",lecturer);
         //model.addAttribute("header","Content-Type:application/json;charset=UTF-8");
-        return "lecturer-imformation";
+        return "lecturer_information";
     }
-    @GetMapping("Lecturer/update/{id}")
+
+    //lecturer personal update
+    @GetMapping("lecturer/edit/{id}")
     public String redirectEditLecturer(@PathVariable Integer id,Model model)
     {
-        Lecturer Lecturer=lecturerService.getLecturerById(id);
-        model.addAttribute("Lecturer",Lecturer);
+        Lecturer lecturer=lecturerService.getLecturerById(id);
+        model.addAttribute("lecturer",lecturer);
         //model.addAttribute("header","Content-Type:application/json;charset=UTF-8");
         return "lecturer-edit";
     }
+
 
     @GetMapping("lecturer/{id}")
     public String GetOneLecturer(@PathVariable Integer id,Model model)

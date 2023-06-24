@@ -16,7 +16,6 @@ public class CourseSchedule {
 
 
 
-
     public CourseSchedule(Integer id,Schedule schedule) {
         this.id=id;
         this.schedule = schedule;
@@ -24,6 +23,6 @@ public class CourseSchedule {
 
 
     public CourseSchedule() {
-
+        schedule=new Schedule();
     }
 }

@@ -3,32 +3,135 @@
 
 <head>
     <meta charset="ISO-8859-1">
-    <title>Course Management System</title>
+    <title>Student Management System</title>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <style>
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateX(120%);
+            }
+            50% {
+                transform: translateX(0%);
+            }
+        }
+
+        .navbar {
+            overflow: hidden;
+        }
+
+        .navbar-brand,
+        .navbar-nav {
+            display: inline-block;
+        }
+
+        .moving-text {
+            display: inline-block;
+            white-space: nowrap;
+            animation: bounce 7s linear infinite;
+            font-size: 40px;
+            color: white;
+        }
+
+        /* Custom CSS for tab button colors */
+        .nav-pills .nav-link.active,
+        .nav-pills .show > .nav-link {
+            background-color: cornflowerblue;
+            color: white;
+        }
+
+        .nav-pills .nav-link {
+            color: cornflowerblue;
+        }
+
+        /* Set the wrapper as a flex container */
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Set the content to grow and push the footer to the bottom */
+        .content {
+            flex-grow: 4;
+        }
+
+        footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: lightgray; /* Adjust the background color as needed */
+            padding: 10px; /* Adjust the padding as needed */
+            text-align: center; /* Adjust the text alignment as needed */
+        }
+
+    </style>
 </head>
 
 <body>
+<!--<nav class="navbar navbar-expand-md bg-dark navbar-dark">-->
+<nav class="navbar navbar-expand-md navbar-light" style="background-color: cornflowerblue;">
+    <!-- Brand -->
+    <img src="https://th.bing.com/th/id/R.12e91eada191070b23d272c2461d1d80?rik=aJDWMrh89h%2foTg&riu=http%3a%2f%2fcdn.onlinewebfonts.com%2fsvg%2fimg_554181.png&ehk=f9bsqbuePmFYo1Hsc%2b85jM8fsbZW7rmllZcpxuHG7h4%3d&risl=&pid=ImgRaw&r=0"
+         alt="Logo" width="60" height="60" class="logo-img">
+    <a class="navbar-brand" style="color: white; font-size: 30px;">CAPS</a>
+    <div class="moving-text">
+        <span th:text="|hello ${session.username}|"></span>
+    </div>
+</nav>
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <p></p>
+                <a class="nav-link active" id="v-pills-ManageStudent-tab" data-toggle="pill" th:href="${session.id}"
+                   role="tab" aria-controls="v-pills-ManageStudent" aria-selected="true">Manage Student</a>
+                <p></p>
+                <a class="nav-link active" id="v-pills-ManageLecturer" data-toggle="pill"
+                   th:href="@{/lecturers}" role="tab" aria-controls="v-pills-ViewCourseEnrolment"
+                   aria-selected="true">Manage Lecturer</a>
+                <p></p>
+                <a class="nav-link active" id="v-pills-Manage Courses" data-toggle="pill"
+                   th:href="@{/lecturers}" role="tab" aria-controls="v-pills-Manage Courses"
+                   aria-selected="true">Manage Courses</a>
+                <p></p>
+                <a class="nav-link active" id="v-pills-ManageEnrolment" data-toggle="pill"
+                   th:href="@{/manageEnrollment}" role="tab" aria-controls="v-pills-ManageEnrolment"
+                   aria-selected="true">Manage Enrolment</a>
+                <p></p>
+                <a class="nav-link active" id="v-pills-Log Out" data-toggle="pill" th:href="@{/logout}" role="tab"
+                   aria-controls="v-pills-LogOut" aria-selected="true">Log Out</a>
+
+            </div>
+        </div>
+        <div class="col-8">
     <div class="container">
-        <h1>Course Management System</h1>
-        <hr>
+        <h1> Course Management System</h1>
         <h2>Update Course</h2>
 
         <form action="#" th:action="@{/course/update/}+${course.id}" th:object="${course}" method="post">
 
             <!-- Add hidden form field to handle update -->
             <input type="hidden" th:field="*{id}" />
-            <fieldset> Course ID: <input type="text" th:field="*{courseId}" class="form-control mb-4 col-4"> </fieldset>
+            <fieldset> Course ID: <input type="text" th:field="*{id}" class="form-control mb-4 col-4"> </fieldset>
             <fieldset> Course Name:<input type="text" th:field="*{courseName}" class="form-control mb-4 col-4"></fieldset>
-            <fieldset> Course Capacity:<input type="text" th:field="*{courseCapacity}" class="form-control mb-4 col-4"></fieldset>
-            <fieldset> Fee:<input type="text" th:field="*{fee}" class="form-control mb-4 col-4"></fieldset>
-            <button type="submit" class="btn btn-info col-2">Update Course</button>
+            <fieldset> Faculty:
+                <div th:each="faculty:${faculties}">
+                    <input type="radio" th:each="*{faculty.facultyName}" class="form-control mb-4 col-4" name="faculty">
+                </div>>
+            </fieldset>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </form>
 
-        <hr>
-
-        <a th:href="@{/course/list}"> Back to Course List</a>
     </div>
+        </div>
 </body>
-
+<footer class="footer">
+    &copy; <span th:text="2023"></span> www.caps.edu.sg
+    <strong><img src="https://www.pinclipart.com/picdir/big/405-4059078_png-file-svg-transparent-white-home-button-clipart.png" width="20" height="20" hspace="10"> Address:</strong> 25 Huang Mei Keng Terrance, Singapore
+    <strong><img src ="https://cdn0.iconfinder.com/data/icons/mini-icon-2-2/16/telephone-512.png" width="20" height="20" hspace="10"> Contact Number:</strong> 1234567890
+    <strong><img src="https://cdn.iconscout.com/icon/premium/png-512-thumb/mail-1772981-1508923.png" width="20" height="20" hspace="10">Email:</strong> example@example.com
+</footer>
 </html>
