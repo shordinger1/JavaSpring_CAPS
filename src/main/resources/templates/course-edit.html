@@ -107,31 +107,106 @@
             </div>
         </div>
         <div class="col-8">
-    <div class="container">
-        <h1> Course Management System</h1>
-        <h2>Update Course</h2>
+            <div class="container">
+                <h1> Course Management System</h1>
+                <h2>Update Course</h2>
+                <table border="1" class="table table-striped table-responsive-md">
+                    <thead>
+                    <tr>
+                        <th> Course Name</th>
+                        <th> Course Lecturer</th>
+                        <th> Faculty</th>
+                        <th> Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="courselecturer : ${courseLecturers}">
+                        <form th:action="@{/updateCourseLecturer/}+${courselecturer.id}" method="post"
+                              th:object="${courseLecturer}">
+                            <td>
+                                <fieldset><label>
+                                    <input type="text" th:field="*{course.courseName}"
+                                           class="form-control mb-4 col-4" th:text="|before:${courselecturer.course.courseName}|">
+                                </label>
+                                </fieldset>
+                            </td>
+                            <td>
+                                <fieldset>
+                                    <label>
+                                        <select th:field="*{lecturer.id}">
+                                            <option th:each="lecturer:${lecturers}" th:text="${lecturer.getFullName()}"
+                                                    class="form-control mb-4 col-4"
+                                                    th:value="${lecturer.id}">
+                                        </select>
+                                    </label>
+                                </fieldset>
+                            </td>
+                            <td>
+                                <fieldset>
+                                    <label>
+                                        <select th:field="*{course.faculty.id}">
+                                            <option th:each="faculty:${faculties}" th:text="${faculty.facultyName}"
+                                                    class="form-control mb-4 col-4"
+                                                    name="faculty" th:value="${faculty.id}">
+                                        </select>
+                                    </label>
 
-        <form action="#" th:action="@{/course/update/}+${course.id}" th:object="${course}" method="post">
+                                </fieldset>
+                            </td>
 
-            <!-- Add hidden form field to handle update -->
-            <input type="hidden" th:field="*{id}" />
-            <fieldset> Course ID: <input type="text" th:field="*{id}" class="form-control mb-4 col-4"> </fieldset>
-            <fieldset> Course Name:<input type="text" th:field="*{courseName}" class="form-control mb-4 col-4"></fieldset>
-            <fieldset> Faculty:
-                <div th:each="faculty:${faculties}">
-                    <input type="radio" th:each="*{faculty.facultyName}" class="form-control mb-4 col-4" name="faculty">
-                </div>>
-            </fieldset>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
 
-    </div>
+                            <td>
+                                <button class="btn btn-primary">Update</button>
+                            </td>
+                        </form>
+                    </tr>
+                    </tbody>
+                </table>
+                <div>
+                    <p> Add a new Course with lecturer</p>
+                </div>
+                <form th:action="@{/addCourseLecturer}" method="post" th:object="${courseLecturer}">
+                    <fieldset><label>
+                        <input type="text" th:field="*{course.courseName}"
+                               class="form-control mb-4 col-4">
+                    </label>
+                    </fieldset>
+                    <fieldset>Course Name:
+                        <label>
+                            <select th:field="*{lecturer.id}" >
+                                <option th:each="lecturer:${lecturers}" th:text="${lecturer.getFullName()}"
+                                        class="form-control mb-4 col-4"
+                                        th:value="${lecturer.id}">
+                            </select>
+                        </label>
+                    </fieldset>
+                    <fieldset>
+                        <label>
+                            <select th:field="*{course.faculty.id}" >
+                                <option th:each="faculty:${faculties}" th:text="${faculty.facultyName}"
+                                        class="form-control mb-4 col-4"
+                                        name="faculty" th:value="${faculty.id}">
+                            </select>
+                        </label>
+
+                    </fieldset>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+
+            </div>
         </div>
+    </div>
+</div>
 </body>
 <footer class="footer">
     &copy; <span th:text="2023"></span> www.caps.edu.sg
-    <strong><img src="https://www.pinclipart.com/picdir/big/405-4059078_png-file-svg-transparent-white-home-button-clipart.png" width="20" height="20" hspace="10"> Address:</strong> 25 Huang Mei Keng Terrance, Singapore
-    <strong><img src ="https://cdn0.iconfinder.com/data/icons/mini-icon-2-2/16/telephone-512.png" width="20" height="20" hspace="10"> Contact Number:</strong> 1234567890
-    <strong><img src="https://cdn.iconscout.com/icon/premium/png-512-thumb/mail-1772981-1508923.png" width="20" height="20" hspace="10">Email:</strong> example@example.com
+    <strong><img
+            src="https://www.pinclipart.com/picdir/big/405-4059078_png-file-svg-transparent-white-home-button-clipart.png"
+            width="20" height="20" hspace="10"> Address:</strong> 25 Huang Mei Keng Terrance, Singapore
+    <strong><img src="https://cdn0.iconfinder.com/data/icons/mini-icon-2-2/16/telephone-512.png" width="20" height="20"
+                 hspace="10"> Contact Number:</strong> 1234567890
+    <strong><img src="https://cdn.iconscout.com/icon/premium/png-512-thumb/mail-1772981-1508923.png" width="20"
+                 height="20" hspace="10">Email:</strong> example@example.com
 </footer>
 </html>

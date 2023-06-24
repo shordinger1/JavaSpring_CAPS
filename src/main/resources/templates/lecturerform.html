@@ -111,7 +111,7 @@
                 <hr>
                 <h2>Add Lecturer</h2>
 
-                <form action="#" th:action="@{/lecturer/save}" th:object="${lecturer}" method="post">
+                <form action="#" th:action="@{/addLecturer}" th:object="${lecturer}" method="post">
 
                     <!-- Add hidden form field to handle update -->
                     <input type="hidden" th:field="*{id}"/>

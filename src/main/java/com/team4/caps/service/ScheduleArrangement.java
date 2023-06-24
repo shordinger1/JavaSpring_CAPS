@@ -1,7 +1,6 @@
 package com.team4.caps.service;
 
 import com.team4.caps.model.CourseLecturer;
-import com.team4.caps.model.CourseSchedule;
 import com.team4.caps.model.Schedule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,14 +10,11 @@ import java.util.*;
 public class ScheduleArrangement {
 
     private final CourseLecturerService courseLecturerService;
-    private final ClassroomService classroomService;
-    private final CourseScheduleService courseScheduleService;
-    private final ScheduleService scheduleService;
+    private final ClassroomService classroomService;private final ScheduleService scheduleService;
     @Autowired
-    public ScheduleArrangement(CourseLecturerService courseLecturerService, ClassroomService classroomService,CourseScheduleService courseScheduleService,ScheduleService scheduleService) {
+    public ScheduleArrangement(CourseLecturerService courseLecturerService, ClassroomService classroomService,ScheduleService scheduleService) {
         this.courseLecturerService = courseLecturerService;
         this.classroomService = classroomService;
-        this.courseScheduleService=courseScheduleService;
         this.scheduleService=scheduleService;
     }
 
@@ -61,7 +57,7 @@ public class ScheduleArrangement {
                 scheduleService.createSchedule(schedules[i][j]);
                 lecturers[i][j].setClassroom(classrooms.get(j));
                 courseLecturerService.updateCourseLecturerById(lecturers[i][j].getId(),lecturers[i][j]);
-                courseScheduleService.createCourseSchedule(new CourseSchedule(lecturers[i][j].getId(),schedules[i][j]));
+                scheduleService.createSchedule(schedules[i][j]);
             }
         }
         return true;

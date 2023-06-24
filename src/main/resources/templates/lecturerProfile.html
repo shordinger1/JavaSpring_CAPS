@@ -92,19 +92,19 @@
             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <p></p>
                 <a class="nav-link active" id="v-pills-ViewCoursesTaught-tab" data-toggle="pill"
-                   th:href="@{/courses-taught}" role="tab" aria-controls="v-pills-ViewCoursesTaught"
+                   th:href="@{/lecturer/course/}+${session.id}" role="tab" aria-controls="v-pills-ViewCoursesTaught"
                    aria-selected="true">View Courses Taught</a>
                 <p></p>
                 <a class="nav-link active" id="v-pills-View Course Enrolment" data-toggle="pill"
-                   href="#v-pills-ViewCourseEnrolment" role="tab" aria-controls="v-pills-ViewCourseEnrolment"
+                   th:href="@{/studentCourse/courseLecturer/}+|${session.id}/0|" role="tab" aria-controls="v-pills-ViewCourseEnrolment"
                    aria-selected="true">View Course Enrolment</a>
                 <p></p>
                 <a class="nav-link active" id="v-pills-Grade a Course" data-toggle="pill"
-                   href="#v-pills-Grade a Courese" role="tab" aria-controls="v-pills-GradeACourse" aria-selected="true">Grade
+                   th:href="@{/courseGrade/}+${session.id}" role="tab" aria-controls="v-pills-GradeACourse" aria-selected="true">Grade
                     a Course</a>
                 <p></p>
                 <a class="nav-link active" id="v-pills-View a Student Performance" data-toggle="pill"
-                   href="#v-pills-ViewAStudentPerformance" role="tab" aria-controls="v-pills-ViewAStudentPerformance"
+                   th:href="@{/view-performance-students/0}" role="tab" aria-controls="v-pills-ViewAStudentPerformance"
                    aria-selected="true">View a Student Performance</a>
                 <p></p>
                 <a class="nav-link active" id="v-pills-Log Out" data-toggle="pill" th:href="@{/logout}" role="tab"

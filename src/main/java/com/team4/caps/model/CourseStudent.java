@@ -19,5 +19,15 @@ public class CourseStudent {
     private Student student;
 
     private Double grade;
+
+    //0-pending,1-accepted,2-completed,3-rejected,4-banned
     private Integer requestStatus;
+
+    public String status()
+    {
+        String[] status={
+                "pending","accepted","completed","rejected","banned"
+        };
+        return status[requestStatus];
+    }
 }

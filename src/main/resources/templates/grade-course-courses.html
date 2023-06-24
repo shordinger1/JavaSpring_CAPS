@@ -100,7 +100,7 @@
                 <p></p>
                 <a class="nav-link active" id="v-pills-ViewCoursesTaught-tab" data-toggle="pill" th:href="@{/lecturer/course/{id}(id=*{session.username})}" role="tab" aria-controls="v-pills-ViewCoursesTaught" aria-selected="true">View Courses Taught</a>
                 <p></p>
-                <a class="nav-link active" id="v-pills-View Course Enrolment" data-toggle="pill" href="#v-pills-ViewCourseEnrolment" role="tab" aria-controls="v-pills-ViewCourseEnrolment" aria-selected="true">View Course Enrolment</a>
+                <a class="nav-link active" id="v-pills-View Course Enrolment" data-toggle="pill" th:href="@{/studentCourse/courseLecturer/}+|${session.id}/0|" role="tab" aria-controls="v-pills-ViewCourseEnrolment" aria-selected="true">View Course Enrolment</a>
                 <p></p>
                 <a class="nav-link active" id="v-pills-Grade a Course" data-toggle="pill" href="/grade-course-courses" role="tab" aria-controls="v-pills-GradeACourse" aria-selected="true">Grade a Course</a>
                 <p></p>

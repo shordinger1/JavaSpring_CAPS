@@ -10,7 +10,7 @@ public class Classroom {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String classRoomName;
+    private String classRoomName="_";
 
-    private Integer classRoomSize;
+    private Integer classRoomSize=-1;
 }

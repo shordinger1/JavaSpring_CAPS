@@ -129,8 +129,8 @@
                     <td th:text="${course.faculty.facultyName}"></td>
                     
                     
-                    <td> <a href="course-edit.html" th:href="@{/course/edit/}+${course.id}" class="btn btn-primary">Update</a>
-                        <a href="courses.html" th:href="@{/course/deleteCourse/}+${course.id}" class="btn btn-danger">Delete</a>
+                    <td> <a href="course-edit.html" th:href="@{/course/update/}+${course.id}" class="btn btn-primary">Update</a>
+                        <a href="courses.html" th:href="@{deleteCourse/}+${course.id}" class="btn btn-danger">Delete</a>
                     </td>
                 </tr>
             </tbody>

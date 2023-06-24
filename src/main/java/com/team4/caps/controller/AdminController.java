@@ -94,12 +94,18 @@ public class AdminController {
         }
     }
 
+    @GetMapping("/ArrangeTheSchedule")
+    public String adminArrange(Model model)
+    {
+        return "redirect:/courses";
+    }
+
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         System.out.println(session.getId());
         System.out.println(session.getAttribute("username"));
         session.invalidate();
-        return "index";
+        return "/logout";
     }
 
 }

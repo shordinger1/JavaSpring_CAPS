@@ -45,4 +45,11 @@ public class CourseLecturerService{
         }
         return false;
     }
+
+    public boolean createCourseLecturer(CourseLecturer courseLecturer)
+    {
+        courseLecturerRepository.save(courseLecturer);
+        return true;
+    }
+
 }

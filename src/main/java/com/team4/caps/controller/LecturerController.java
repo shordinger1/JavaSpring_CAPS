@@ -32,7 +32,7 @@ public class LecturerController {
         return "lecturers";
     }
 
-    @GetMapping("Lecturer/add")
+    @GetMapping("lecturer/add")
     public String redirectAddLecturer(Model model)
     {
         model.addAttribute("lecturer",new Lecturer());
@@ -40,25 +40,15 @@ public class LecturerController {
         return "lecturerform";
     }
 
-//lecturer admin update
-    @GetMapping("lecturer/update/{id}")
-    public String redirectUpdateLecturer(@PathVariable Integer id,Model model)
-    {
-        Lecturer lecturer=lecturerService.getLecturerById(id);
-        model.addAttribute("lecturer",lecturer);
-        //model.addAttribute("header","Content-Type:application/json;charset=UTF-8");
-        return "lecturer_information";
-    }
-
-    //lecturer personal update
     @GetMapping("lecturer/edit/{id}")
     public String redirectEditLecturer(@PathVariable Integer id,Model model)
     {
-        Lecturer lecturer=lecturerService.getLecturerById(id);
+        var lecturer=lecturerService.getLecturerById(id);
         model.addAttribute("lecturer",lecturer);
         //model.addAttribute("header","Content-Type:application/json;charset=UTF-8");
         return "lecturer-edit";
     }
+
 
 
     @GetMapping("lecturer/{id}")
@@ -73,14 +63,10 @@ public class LecturerController {
     }
 
     //@PostMapping("")
-    @PostMapping(value="/addLecturer",produces = "application/json")
+    @PostMapping(value="/addLecturer")
     public String createLecturer(@ModelAttribute Lecturer lecturer,Model model)
     {
-        //System.out.println("114514");
-        //Lecturer Lecturer= (Lecturer) model.getAttribute("Lecturer");
         lecturer.setPassword(SecurityConfig.encoder(lecturer.getPassword()));
-        Date date=new Date();
-        //lecturer.setEnrollmentDate((date.getTime()));
         var status=lecturerService.createLecturer(lecturer);
         model.addAttribute("status",status);
         List<Lecturer> lecturers=new ArrayList<>();
@@ -89,7 +75,7 @@ public class LecturerController {
         return "lecturers";
     }
 
-    @PostMapping("lecturer/edit/{id}")
+    @PostMapping("/lecturer/update/{id}")
     public String updateLecturer(@ModelAttribute Lecturer lecturer, @PathVariable Integer id, Model model) throws IllegalAccessException {
         Lecturer lecturerBefore=lecturerService.getLecturerById(id);
         lecturer.setPassword(SecurityConfig.encoder(lecturer.getPassword()));
@@ -107,7 +93,7 @@ public class LecturerController {
         return "lecturers";
     }
 
-    @GetMapping ("lecturer/delete/{id}")
+    @GetMapping ("/lecturer/delete/{id}")
     public String deleteLecturer(@PathVariable Integer id,Model model)
     {
         var status=lecturerService.deleteLecturerById(id);

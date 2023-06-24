@@ -24,18 +24,14 @@ public class CourseLecturer {
     @JoinColumn(name = "classroom_id")
     private Classroom classroom;
 
-    @OneToOne
-    @JoinColumn(name = "course_schedule_id")
-    private CourseSchedule courseSchedule;
+    @ManyToOne
+    @JoinColumn(name = "schedule_id")
+    private Schedule schedule;
 
     public Integer getCourseCapacity()
     {
         return classroom.getClassRoomSize();
     }
 
-    public CourseLecturer()
-    {
-        this.courseSchedule=new CourseSchedule();
-    }
 
 }

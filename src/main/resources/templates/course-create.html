@@ -111,33 +111,30 @@
             <div class="container">
                 <h1> Course Management System</h1>
                 <h2>Add Course</h2>
-
                 <form action="#" th:action="@{/course/create}" th:object="${course}" method="post">
 
-                    <form action="#" th:action="@{/course/create}" th:object="${course}" method="post">
+                    <!-- Add hidden form field to handle update -->
+                    <input type="hidden" th:field="*{id}"/>
+                    <fieldset> Course ID: <input type="text" th:field="*{id}" class="form-control mb-4 col-4">
+                    </fieldset>
+                    <fieldset> Course Name:<input type="text" th:field="*{courseName}"
+                                                  class="form-control mb-4 col-4"></fieldset>
+                    <fieldset> Faculty:
+                        <select th:field="*{faculty.id}">
+                            <option th:each="faculty:${faculties}" th:text="${faculty.facultyName}"
+                                    class="form-control mb-4 col-4"
+                                    name="faculty"  th:value="${faculty.id}">
+                        </select>
 
-                        <!-- Add hidden form field to handle update -->
-                        <input type="hidden" th:field="*{id}"/>
-                        <fieldset> Course ID: <input type="text" th:field="*{id}" class="form-control mb-4 col-4">
-                        </fieldset>
-                        <fieldset> Course Name:<input type="text" th:field="*{courseName}"
-                                                      class="form-control mb-4 col-4"></fieldset>
-                        <fieldset> Course Name:<input type="text" th:field="*{courseName}"
-                                                      class="form-control mb-4 col-4"></fieldset>
-                        <fieldset> Faculty:
-                            <div th:each="faculty:${faculties}">
-                                <input type="radio" th:each="*{faculty.facultyName}" class="form-control mb-4 col-4"
-                                       name="faculty">
-                            </div>
-
-                        </fieldset>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
+                    </fieldset>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
 
             </div>
 
+        </div>
     </div>
-
+</div>
 </body>
 
 <footer class="footer">

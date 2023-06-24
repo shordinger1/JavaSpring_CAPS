@@ -85,13 +85,13 @@
         <div class="col-3">
             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <p></p>
-                <a class="nav-link active" id="v-pills-ViewCoursesTaught-tab" data-toggle="pill" th:href="${session.id}" role="tab" aria-controls="v-pills-ViewCoursesTaught" aria-selected="true">View Courses Taught</a>
+                <a class="nav-link active" id="v-pills-ViewCoursesTaught-tab" data-toggle="pill" th:href="@{/lecturer/course/}+${session.id}" role="tab" aria-controls="v-pills-ViewCoursesTaught" aria-selected="true">View Courses Taught</a>
                 <p></p>
-                <a class="nav-link active" id="v-pills-View Course Enrolment" data-toggle="pill" href="#v-pills-ViewCourseEnrolment" role="tab" aria-controls="v-pills-ViewCourseEnrolment" aria-selected="true">View Course Enrolment</a>
+                <a class="nav-link active" id="v-pills-View Course Enrolment" data-toggle="pill" th:href="@{/studentCourse/courseLecturer/}+|${session.id}/0|" role="tab" aria-controls="v-pills-ViewCourseEnrolment" aria-selected="true">View Course Enrolment</a>
                 <p></p>
                 <a class="nav-link active" id="v-pills-Grade a Course" data-toggle="pill" th:href="@{/courseGrade/}+${session.id}" role="tab" aria-controls="v-pills-GradeACourse" aria-selected="true">Grade a Course</a>
                 <p></p>
-                <a class="nav-link active" id="v-pills-View a Student Performance" data-toggle="pill" href="#v-pills-ViewAStudentPerformance" role="tab" aria-controls="v-pills-ViewAStudentPerformance" aria-selected="true">View a Student Performance</a>
+                <a class="nav-link active" id="v-pills-View a Student Performance" data-toggle="pill" th:href="@{/view-performance-students/0}" role="tab" aria-controls="v-pills-ViewAStudentPerformance" aria-selected="true">View a Student Performance</a>
                 <p></p>
                 <a class="nav-link active" id="v-pills-Log Out" data-toggle="pill" th:href="@{/logout}" role="tab" aria-controls="v-pills-LogOut" aria-selected="true">Log Out</a>
 
@@ -127,7 +127,10 @@
 
                     <!-- when user click view button that will go to view course enrolment page  -->
                     <td>
-                        <a th:href="@{/studentCourse/courseLecturer/}+${courseLecturer.id}" class="btn btn-secondary btn-sm mb-3" style="background-color: lightseagreen; border: none; color: white;">View enrolment details</a>
+                        <a th:href="@{/studentCourse/courseLecturer/{id}/{c_id}(id=${session.id},c_id=${courseLecturer.course.id})}" class="btn btn-secondary btn-sm mb-3" style="background-color: lightseagreen; border: none; color: white;">View enrolment details</a>
+                        <a th:href="@{/view-performance-students/{id}(id=${courseLecturer.id})">
+                            view details
+                        </a>
                     </td>
                 </tr>
                 </body>

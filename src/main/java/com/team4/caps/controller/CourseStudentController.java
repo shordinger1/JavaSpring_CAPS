@@ -10,6 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Controller
 public class CourseStudentController {
@@ -30,19 +33,28 @@ public class CourseStudentController {
         return "CourseStudents";
     }
 
-    @GetMapping("/studentCourse/{id}")
-    public String GetOneCourseStudent(@PathVariable Integer id,Model model)
+    @GetMapping("/view-performance-students/{id}")
+    public String GetCourseStudent(@PathVariable Integer id,Model model)
     {
-        var courseStudent=courseStudentService.getCourseStudentById(id);
-        model.addAttribute("courseStudent_"+id.toString(),courseStudent);
-        return "courseStudent";
+        var courseStudent=courseStudentService.getAllCourseStudents();
+        if(id!=0) {
+             courseStudent=courseStudent.stream().filter(courseStudent1 -> courseStudent1.getCourseLecturer().getId() == id).toList();
+        }
+        model.addAttribute("courseStudent",courseStudent);
+        return "view-performance-students";
     }
     //viewcourse-enrolment.html
-    @GetMapping("/studentCourse/courseLecturer/{id}")
-    public String GetAllCourseStudentByCourseLecturerId(@PathVariable Integer id,Model model)
+    @GetMapping("/studentCourse/courseLecturer/{id}/{c_id}")
+    public String GetAllCourseStudentByCourseLecturerId(@PathVariable Integer id, Model model, @PathVariable Integer c_id)
     {
-        var courseStudent=courseStudentService.getAllCourseStudents().stream().
-                filter(courseStudent1 -> courseStudent1.getCourseLecturer().getId()==id).toList();
+        var courseStudents=courseStudentService.getAllCourseStudents().stream().
+                filter(courseStudent1 -> courseStudent1.getCourseLecturer().getId()==id && courseStudent1.getRequestStatus()<3);
+        List<CourseStudent> courseStudent=new ArrayList<>();
+        if(c_id!=0)
+        {
+            courseStudent=courseStudents.filter(courseStudent1 -> courseStudent1.getCourseLecturer().getCourse().getId()==id).toList();
+        }
+        else courseStudent=courseStudents.toList();
         model.addAttribute("courseStudents",courseStudent);
         //ystem.out.println(courseStudent);
         return "viewcourse-enrolment";
@@ -73,9 +85,10 @@ public class CourseStudentController {
         Double grade=Double.valueOf(body.substring(6));
         var courseStudent=courseStudentService.getCourseStudentById(id);
         courseStudent.setGrade(grade);
+        courseStudent.setRequestStatus(3);
         var courseStudents=courseStudentService.getAllCourseStudents().stream().filter(courseStudent1 -> courseStudent1.getCourseLecturer()==courseStudent.getCourseLecturer()).toList();
-        model.addAttribute("updatedStudent",courseStudent);
-        return "grade-course-students";
+        //model.addAttribute("updatedStudent",courseStudent);
+        return "redirect:/grade-course-students/"+courseStudent.getCourseLecturer().getId();
     }
 
     @PostMapping("/StudentCourse/add/{id}")
