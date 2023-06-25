@@ -69,8 +69,18 @@ public class AdminController {
                     //courses.forEach(courseLecturer -> courseLecturer.setCourseSchedule(new CourseSchedule()));
                     //coursesAlreadyEnrolled.forEach(courseLecturer -> courseLecturer.getCourseLecturer().setCourseSchedule(new CourseSchedule()));
                     model.addAttribute("courses",courses);
-                    model.addAttribute("coursesAlreadyEnrolled",coursesAlreadyEnrolled);
+                    model.addAttribute("coursesAlreadyComplete",coursesAlreadyEnrolled.stream().filter(courseStudent -> courseStudent.getRequestStatus()==2).toList());
+                    model.addAttribute("coursesAlreadyEnrolled",coursesAlreadyEnrolled.stream());
                     model.addAttribute("course",new CourseLecturer());
+                    model.addAttribute("searchCourse",new CourseLecturer());
+
+                    //var courseAlreadyEnrolled=courseStudentService.getAllCourseStudents().stream()
+                    //        .filter(courseStudent -> courseStudent.getStudent().getId()==id).map(CourseStudent::getCourseLecturer).toList();
+                    var courseLecturer= new java.util.ArrayList<>(courseLecturerService.getAllCourseLecturers().stream().filter(courseLecturer1 -> courseLecturer1.getEnrolled() < courseLecturer1.getCourseCapacity()).toList());
+                    courseLecturer.removeAll(coursesAlreadyEnrolled);
+                    model.addAttribute("search_courseLecturer",new CourseLecturer());
+                    model.addAttribute("courseEnrolled",courseLecturer);
+
                     session.setAttribute("id", id);
                     session.setAttribute("username", username);
                     session.setAttribute("type", type);

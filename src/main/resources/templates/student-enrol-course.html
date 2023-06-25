@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Student Landing page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+
+
+    <style>
+        /* Custom CSS for tab button colors */
+        .nav-pills .nav-link.active,
+        .nav-pills .show > .nav-link {
+            background-color: orange;
+            color: black;
+        }
+
+        .nav-pills .nav-link {
+            color: orange;
+        }
+
+        .footer {
+            background-color: gray;
+            color: white;
+            padding: 10px;
+            margin-top: auto;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .content {
+            flex-grow: 1;
+        }
+    </style>
+
+    <!-- for data time picker -->
+    <!-- <c:set var="basePath" value="${pageContext.request.contextPath}"></c:set> -->
+</head>
+<script >
+    $(function () {
+        var currentPage = 1
+        var totalPage = 1
+        searchCourses(1, true); //default dispalying the first page
+        // Search form submit event
+        $('#searchForm').submit(function (event) {
+            event.preventDefault(); // Prevent form submission
+            searchCourses(1, true);
+        });
+
+        // Reset button click event
+        $('#resetButton').click(function () {
+            // Reset the search form and update the table with all courses
+            $('#searchForm')[0].reset();
+            searchCourses(1, true)
+        });
+
+        $(document).on('click', ".page-item.number", function () {
+            currentPage = $(this).children().attr('value') // get current number from class = "page-item number"
+            console.log($(this).children().attr('value'))
+            searchCourses(currentPage, true)
+        })
+
+        $(document).on('click', ".page-link.pageStart", function () {
+            var page = currentPage - 1 <= 1 ? 1 : currentPage - 1
+            searchCourses(page, true)
+
+        })
+
+        $(document).on('click', ".page-link.pageEnd", function () {
+            var page = currentPage + 1 >= totalPage ? totalPage : currentPage + 1
+            searchCourses(page, true)
+        })
+    })
+
+
+    function searchCourses(pageNumber, refreshPageNumber) {
+        var fields = $('#searchForm').serializeArray();
+        console.log(fields)
+        var params = {};
+        $.each(fields, function (index, field) {
+            params[field.name] = field.value;
+        })
+        params['pageNumber'] = pageNumber;
+        console.log(params)
+        var jsonParam = JSON.stringify(params);
+        console.log(jsonParam);
+        $.ajax({
+            url: 'http://localhost:8080/searchEnrollment', //替换路径
+            type: 'POST',
+            contentType: 'application/json',
+            data: jsonParam,
+            success: function (response) {
+                updateTable(response.pageData);
+                console.log(response.pageData);
+                if (refreshPageNumber) {
+                    totalPage = response.totalPage
+                    updatePageNumber(response.totalPage);
+                }
+                activePageNumber(pageNumber)
+            },
+            error: function (xhr, status, error) {
+                console.log(xhr.responseText);
+            }
+        });
+    }
+
+    // use loop to check all page items,
+    // if the value of current page item is equal to current page number(the param passed),
+    // set as active
+    function activePageNumber(pageNumber) {
+        $('.page-item').removeClass('active');
+        $.each($('.page-item').children(), function (index, el) {
+            if ($(el).attr('value') == pageNumber) {
+                $(el).parents().addClass('active');
+                return
+            }
+        })
+    }
+
+    // display total page number, from 1 - totalPages
+    function updatePageNumber(totalPages) {
+        $('.page-link.number').remove();
+        for (var i = 1; i <= totalPages; i++) {
+            $('#pageEnd').before('<li class="page-item number"><span class="page-link number" value=' + i + '>' + i + '</span></li>')
+        }
+    }
+
+    function updateTable(results) {
+        var tableBody = $('#tbodyData');
+        tableBody.empty();
+
+        if (results.length === 0) {
+            tableBody.append('<tr><td colspan="9" class="text-center">No courses found.</td></tr>');
+        } else {
+            $.each(results, function (index, course) {
+                var row = '<tr>' +
+                    //'<td>' + course.id + '</td>' +
+                    //'<td>' + course.courseId + '</td>' +
+                    '<td>' + course.courseName + '</td>' +
+                    '<td>' + course.c + '</td>' +
+                    '<td>' + course.courseCapacity + '</td>' +
+                    '<td>' + course.courseVacancy + '</td>' +
+                    '<td>' + course.faculty + '</td>' +
+                    '<td>' + course.courseStartDate + '</td>' +
+                    '<td>' + course.courseEndDate + '</td>' +
+                    '<td><span class="btn btn-warning" id="enrolCourses" onclick="enrolCourses(' + course.id + ')">Enrol</span></td>' +
+                    '</tr>';
+                tableBody.append(row);
+            });
+        }
+    }
+
+    // 点击enrol 之后，传输courseId给后端，如果选课成功，需要courseId+studentId保存当前课程
+    function enrolCourses(courseId) {
+        console.log(courseId)
+        $.ajax({
+            url: 'http://localhost:8080/course-students/save/' + courseId, //这里路径需要替换
+            type: 'POST',
+            success: function (response) { // 返回true 选课成功, false选课失败
+                alert("Enrolled successfuly.");
+                searchCourses(1, true)
+            },
+            error: function (xhr, status, error) {
+                alert("Erolled failed.");
+            }
+        });
+    }
+
+
+</script>
+<body>
+<!-- nav -->
+<nav class="navbar navbar-expand-md navbar-light" style="background-color: rgb(226, 157, 52);">
+    <!-- Brand -->
+    <img src="https://th.bing.com/th/id/R.12e91eada191070b23d272c2461d1d80?rik=aJDWMrh89h%2foTg&riu=http%3a%2f%2fcdn.onlinewebfonts.com%2fsvg%2fimg_554181.png&ehk=f9bsqbuePmFYo1Hsc%2b85jM8fsbZW7rmllZcpxuHG7h4%3d&risl=&pid=ImgRaw&r=0"
+         alt="Logo" width="60" height="60" class="logo-img">
+    <a class="navbar-brand" style="color: white; font-size: 30px;">CAPS</a>
+
+
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <h6 class="text-white">Welcome, <span th:text="${session.username}">Student</span></h6>
+            </li>
+        </ul>
+    </div>
+</nav>
+<br/>
+
+<!-- student profil page -->
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <a class="nav-link active" id="v-pills-Profile-tab" data-toggle="pill" th:href="@{/students}"
+                   role="tab" aria-controls="v-pills-Profile" aria-selected="true">Profile</a>
+                <a class="nav-link" id="v-pills-GPAandGrades-tab" data-toggle="pill" th:href="@{/students}"
+                   role="tab" aria-controls="v-pills-GPAandGrades" aria-selected="false">GPA and Grades</a>
+                <a class="nav-link" id="v-pills-ViewCourse-tab" data-toggle="pill" th:href="@{/students}"
+                   role="tab" aria-controls="v-pills-ViewCourse" aria-selected="false">View Courses</a>
+                <a  id="v-pills-EnrolForCourse-tab" data-toggle="pill"
+                   th:href="@{/studentCourse/courseLecturer/0/0}" role="tab" aria-controls="v-pills-EnrolForCourse"
+                   aria-selected="false">Enrol for a Course</a>
+                <a  id="v-pills-Logout-tab" data-toggle="pill" th:href="@{/logout}" role="tab"
+                   aria-controls="v-pills-Logout" aria-selected="false">Log Out</a>
+            </div>
+        </div>
+        <div class="col-9 content">
+
+            <div class="tab-pane fade" id="v-pills-EnrolForCourse" role="tabpanel"
+                 aria-labelledby="v-pills-EnrolForCourse-tab">
+                <h2>Enrol for a Course</h2>
+                <h3 class="text-warning">Search for Enrolling Courses</h3>
+                <form class="row g-3" id="searchForm" th:object="${search_courseLecturer}">
+                    <div class="col-md-4">
+                        <label for="courseName">Course Name:</label>
+                        <input type="text" class="form-control" id="courseName" name="courseName" th:field="*{course.courseName}">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="lecturerName">Lecturer Name:</label>
+                        <input type="text" class="form-control" id="lecturerName" name="lecturerName" th:field="*{lecturer.username}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="courseStartDate">Course Start Date:</label>
+                        <!-- <input type="text" class="form-control" id="courseStartDate" name="courseStartDate"> -->
+                        <input type="datetime-local" class="form-control" id="courseStartDate"
+                               name="courseStartDate" th:field="*{schedule.scheduleStartTime}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="courseEndDate">Course End Date:</label>
+                        <input type="datetime-local" class="form-control" id="courseEndDate" name="courseEndDate" th:field="*{schedule.scheduleEndTime}">
+                        <br/>
+                    </div>
+
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-warning">Search</button>
+                        <button type="button" class="btn btn-secondary" id="resetButton">Reset</button>
+                    </div>
+                </form>
+                <br/>
+                <br/>
+                <!-- 这里的课程表，在没有搜索之前，会显示所有该学生可以enrol的课，已经enrol了的课程，不能显示在这一页
+                    如果在搜索框输入一个或者多个搜索条件，下面的课程表只显示搜索内容 -->
+                <div id="courseList">
+                    <div id="gpa-table">
+                        <h3>Courses Results</h3>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th> CourseName</th>
+                                <th> Credits</th>
+                                <th> Capacity</th>
+                                <th> Faculty</th>
+                                <th class="text-sm"> Start Date</th>
+                                <th class="text-sm"> End Date</th>
+                            </tr>
+<!--                            '<td>' + course.courseCredits + '</td>' +-->
+<!--                            '<td>' + course.courseCapacity + '</td>' +-->
+<!--                            '<td>' + course.courseVacancy + '</td>' +-->
+                            </thead>
+                            <tbody id="tbodyData" >
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <nav aria-label="Page navigation">
+                    <ul id="pagination" class="pagination justify-content-center">
+                        <li id="pageStart" class="page-item">
+                                <span class="page-link pageStart">
+                                    &laquo; </span>
+                        </li>
+                        <li id="pageEnd" class="page-item">
+                            <span class="page-link pageEnd" href="#"> &raquo; </span>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+
+<footer class="footer">
+    &copy; <span text="2023"></span> www.caps.edu.sg
+    <strong><img
+            src="https://www.pinclipart.com/picdir/big/405-4059078_png-file-svg-transparent-white-home-button-clipart.png"
+            width="20" height="20" hspace="10"> </strong> 25 Huang Mei Keng Terrance, Singapore
+    <strong><img src="https://cdn0.iconfinder.com/data/icons/mini-icon-2-2/16/telephone-512.png" width="20" height="20"
+                 hspace="10"> Contact Number:</strong> 1234567890
+    <strong><img src="https://cdn.iconscout.com/icon/premium/png-512-thumb/mail-1772981-1508923.png" width="20"
+                 height="20" hspace="10">Email:</strong> example@example.com
+</footer>
+
+
+</html>

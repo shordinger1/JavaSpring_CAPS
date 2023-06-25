@@ -50,10 +50,7 @@ public class CourseStudentService {
         return false;
     }
 
-    public boolean createCourseStudentById(Integer id, CourseStudent courseStudent) {
-        if(courseStudentRepository.existsById(id)){
-            return false;
-        }
+    public boolean createCourseStudentById(CourseStudent courseStudent) {
         Integer courseLecturerId=courseStudent.getCourseLecturer().getId();
         CourseLecturer courseLecturer=courseLecturerService.getCourseLecturerById(courseLecturerId);
         courseLecturer.setEnrolled(courseLecturer.getEnrolled()+1);

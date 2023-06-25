@@ -18,4 +18,6 @@ public class Course{
     @ManyToOne
     @JoinColumn(name = "course_faculty_id")
     private Faculty faculty;
+
+
 }

@@ -1,5 +1,8 @@
 package com.team4.caps.config;
 
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
 public class HtmlPathConfig {
     public static final String main="index";
 

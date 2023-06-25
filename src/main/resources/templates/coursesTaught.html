@@ -128,7 +128,7 @@
                     <!-- when user click view button that will go to view course enrolment page  -->
                     <td>
                         <a th:href="@{/studentCourse/courseLecturer/{id}/{c_id}(id=${session.id},c_id=${courseLecturer.course.id})}" class="btn btn-secondary btn-sm mb-3" style="background-color: lightseagreen; border: none; color: white;">View enrolment details</a>
-                        <a th:href="@{/view-performance-students/{id}(id=${courseLecturer.id})">
+                        <a th:href="@{/view-performance-students/{id}(id=${courseLecturer.id})}">
                             view details
                         </a>
                     </td>

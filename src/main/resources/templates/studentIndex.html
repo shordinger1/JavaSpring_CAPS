@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html  lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <title>Student Landing page</title>
@@ -8,7 +8,7 @@
     <style>
         /* Custom CSS for tab button colors */
         .nav-pills .nav-link.active,
-        .nav-pills .show>.nav-link {
+        .nav-pills .show > .nav-link {
             background-color: orange;
             color: black;
         }
@@ -16,6 +16,7 @@
         .nav-pills .nav-link {
             color: orange;
         }
+
         @keyframes bounce {
             0%, 100% {
                 transform: translateX(120%);
@@ -41,15 +42,16 @@
             font-size: 40px;
             color: white;
         }
-         footer {
-             position: fixed;
-             left: 0;
-             bottom: 0;
-             width: 100%;
-             background-color: lightgray; /* Adjust the background color as needed */
-             padding: 10px; /* Adjust the padding as needed */
-             text-align: center; /* Adjust the text alignment as needed */
-         }
+
+        footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: lightgray; /* Adjust the background color as needed */
+            padding: 10px; /* Adjust the padding as needed */
+            text-align: center; /* Adjust the text alignment as needed */
+        }
     </style>
 </head>
 <body>
@@ -62,325 +64,254 @@
         <span th:text="|hello ${session.username}|"></span>
     </div>
 </nav>
-        <!-- Toggler/collapsibe Button -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </nav>
-    <div class="container">
-        <div class="row">
-            <div class="col-3">
-                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    <a class="nav-link active" id="v-pills-Profile-tab" data-toggle="pill" href="#v-pills-Profile"
-                        role="tab" aria-controls="v-pills-Profile" aria-selected="true">Profile</a>
-                    <a class="nav-link" id="v-pills-GPAandGrades-tab" data-toggle="pill" href="#v-pills-GPAandGrades"
-                        role="tab" aria-controls="v-pills-GPAandGrades" aria-selected="false">GPA and Grades</a>
-                    <a class="nav-link" id="v-pills-ViewCourse-tab" data-toggle="pill" href="#v-pills-ViewCourse"
-                        role="tab" aria-controls="v-pills-ViewCourse" aria-selected="false">View Courses</a>
-                    <a class="nav-link" id="v-pills-EnrolForCourse-tab" data-toggle="pill"
-                        href="#v-pills-EnrolForCourse" role="tab" aria-controls="v-pills-EnrolForCourse"
-                        aria-selected="false">Enrol for a Course</a>
-                    <a class="nav-link" id="v-pills-Logout-tab" data-toggle="pill" th:href="@{/logout}" role="tab"
-                        aria-controls="v-pills-Logout" aria-selected="false">Log Out</a>
-                </div>
+<!-- Toggler/collapsibe Button -->
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+</button>
+</nav>
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <a class="nav-link active" id="v-pills-Profile-tab" data-toggle="pill" href="#v-pills-Profile"
+                   role="tab" aria-controls="v-pills-Profile" aria-selected="true">
+                    Profile</a>
+                <a class="nav-link" id="v-pills-GPAandGrades-tab" data-toggle="pill" href="#v-pills-GPAandGrades"
+                   role="tab" aria-controls="v-pills-GPAandGrades" aria-selected="false">
+                    GPA and Grades</a>
+                <a class="nav-link" id="v-pills-ViewCourse-tab" data-toggle="pill" href="#v-pills-ViewCourse"
+                   role="tab" aria-controls="v-pills-ViewCourse" aria-selected="false">
+                    View Courses</a>
+                <a class="nav-link" id="v-pills-EnrolForCourse-tab" data-toggle="pill" href="#v-pills-EnrolForCourse"
+                   role="tab" aria-controls="v-pills-ViewCourse" aria-selected="false">
+                    Enrol for a Course</a>
+                <a class="nav-link" th:href="@{/logout}">
+                    Log Out</a>
             </div>
-            <div class="col-9">
-                <div class="tab-content" id="v-pills-tabContent">
-                    <div class="tab-pane fade show active" id="v-pills-Profile" role="tabpanel"
-                        aria-labelledby="v-pills-Profile-tab">
-                        <h2>Welcome, <span th:text="${student.getFullName()}"></span></h2>
-                        <!-- <p>This is the content for the Profile tab.</p> -->
-                        <h2>Profile</h2>
-                        <div id="profile-table">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th class="text-center">Details</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <!-- First Name of the student.firstName -->
-                                        <td class="text-center">First Name</td>
-                                        <td th:text="${student.firstname}">John</td>
-                                    </tr>
-                                    <tr>
-                                        <!-- Last Name of the student.lastName -->
-                                        <td class="text-center">Last Name</td>
-                                        <td th:text="${student.lastname}">Doe</td>
-                                    </tr>
-                                    <tr>
-                                        <!-- Birthday of the student.Birthday -->
-                                        <td class="text-center">Birthday</td>
-                                        <td th:text="${student.birthday}">1990-01-01</td>
-                                    </tr>
-                                    <tr>
-                                        <!-- Email of the student.email -->
-                                        <td class="text-center">Email</td>
-                                        <td th:text="${student.email}">123 Main St, City</td>
-                                    </tr>
-                                    <tr>
-                                        <!-- Contact number of the student.contactNumber -->
-                                        <td class="text-center">Contact Number</td>
-                                        <td th:text="${student.contactNumber}">123-456-7890</td>
-                                    </tr>
-                                    <tr>
-                                        <!-- Address of the student.address -->
-                                        <td class="text-center">Address</td>
-                                        <td th:text="${student.address}">123 Main St, City</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <a href="student-update-profile.html" th:href="@{/student}+${student.id}"
-                                class="btn btn-warning">Update Profile</a>
-                        </div>
+        </div>
+        <div class="col-9">
+            <div class="tab-content" id="v-pills-tabContent">
+                <div class="tab-pane fade show active" id="v-pills-Profile" role="tabpanel"
+                     aria-labelledby="v-pills-Profile-tab">
+                    <h2>Welcome, <span th:text="${student.getFullName()}"></span></h2>
+                    <!-- <p>This is the content for the Profile tab.</p> -->
+                    <h2>Profile</h2>
+                    <div id="profile-table">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th class="text-center">Details</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <!-- First Name of the student.firstName -->
+                                <td class="text-center">First Name</td>
+                                <td th:text="${student.firstname}">John</td>
+                            </tr>
+                            <tr>
+                                <!-- Last Name of the student.lastName -->
+                                <td class="text-center">Last Name</td>
+                                <td th:text="${student.lastname}">Doe</td>
+                            </tr>
+                            <tr>
+                                <!-- Birthday of the student.Birthday -->
+                                <td class="text-center">Birthday</td>
+                                <td th:text="${student.birthday}">1990-01-01</td>
+                            </tr>
+                            <tr>
+                                <!-- Email of the student.email -->
+                                <td class="text-center">Email</td>
+                                <td th:text="${student.email}">123 Main St, City</td>
+                            </tr>
+                            <tr>
+                                <!-- Contact number of the student.contactNumber -->
+                                <td class="text-center">Contact Number</td>
+                                <td th:text="${student.contactNumber}">123-456-7890</td>
+                            </tr>
+                            <tr>
+                                <!-- Address of the student.address -->
+                                <td class="text-center">Address</td>
+                                <td th:text="${student.address}">123 Main St, City</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <a href="student-update-profile.html" th:href="@{/student}+${student.id}"
+                           class="btn btn-warning">Update Profile</a>
                     </div>
-                    <div class="tab-pane fade" id="v-pills-GPAandGrades" role="tabpanel"
-                        aria-labelledby="v-pills-GPAandGrades-tab">
-                        <h2>GPA and Grades</h2>
+                </div>
+                <div class="tab-pane fade" id="v-pills-GPAandGrades" role="tabpanel"
+                     aria-labelledby="v-pills-GPAandGrades-tab">
+                    <h2>GPA and Grades</h2>
+                    <div id="gpa-table">
+                        <h3>Course Details</h3>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Course Name</th>
+                                <th>Credits</th>
+                                <th>Grades</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- The course that the student is currently studying in -->
+                            <tr th:each="course__:${coursesAlreadyComplete}">
+                                <td class="courselist" th:text="${course__.getCourseLecturer().course.courseName}">
+                                    Course Name
+                                </td>
+                                <td class="courselist" th:text="${course__.getCourseLecturer().course.courseCredits}">
+                                    Credits
+                                </td>
+                                <td class="courselist" th:text="${course__.getGrade()}">Grade</td>
+                            </tr>
+
+                            <!-- test data can delete (start) -->
+                            <!-- Add more rows as needed -->
+                            <!-- test data can delet (end) -->
+
+                            </tbody>
+                        </table>
+
+                        <h3>Cumulative GPA</h3>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Cumulative GPA</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>3.5</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="v-pills-ViewCourse" role="tabpanel"
+                     aria-labelledby="v-pills-ViewCourse-tab">
+                    <div class="container my-2">
+                        <h2 class="text-warning">View Courses</h2>
+                        <br/>
+
                         <div id="gpa-table">
-                            <h3>Course Details</h3>
+                            <h3>All Courses You Can Enrol</h3>
                             <table class="table">
                                 <thead>
-                                    <tr>
-                                        <th>Course ID</th>
-                                        <th>Course Name</th>
-                                        <th>Credits</th>
-                                        <th>Grades</th>
-                                    </tr>
+                                <tr>
+                                    <th> CourseName</th>
+                                    <th> Credits</th>
+                                    <th> Capacity</th>
+                                    <th> Vacancy</th>
+                                    <th> Faculty</th>
+                                    <th class="text-sm"> Start Date</th>
+                                    <th class="text-sm"> End Date</th>
+                                    <th class="text-sm"> Status </th>
+                                    <th></th>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- The course that the student is currently studying in -->
-                                    <tr th:each="course__:${coursesAlreadyEnrolled}">
-                                        <td class="courselist" th:text="${course__.getCourseLecturer().course.courseName}">Course Name</td>
-                                        <td class="courselist" th:text="${course__.getCourseLecturer().course.courseCredits}">Credits</td>
-                                        <td class="courselist" th:text="${course__.getGrade()}">Grade</td>
-                                    </tr>
+                                <tr th:each="course : ${coursesAlreadyEnrolled}">
+                                    <td th:text="${course.courseLecturer.course.courseName}"></td>
+                                    <td th:text="${course.courseLecturer.course.courseCredits}"></td>
+                                    <td th:text="${course.courseLecturer.courseCapacity}"></td>
+                                    <td th:text="${course.courseLecturer.classroom.classRoomSize}"></td>
+                                    <td th:text="${course.courseLecturer.course.faculty.facultyName}"></td>
+                                    <td th:text="${course.courseLecturer.schedule.scheduleStartTime}"></td>
+                                    <td th:text="${course.courseLecturer.schedule.scheduleEndTime}"></td>
+                                    <td th:text="${course.status()}"></td>
+                                        <!-- <a href="lecturers.html" th:href="@{/lecturer/delete/}+${lecturer.id}"
+                                                                                                    class="btn btn-danger">Delete</a> -->
+                                    </td>
 
-                                    <!-- test data can delete (start) -->
-                                    <!-- Add more rows as needed -->
-                                    <!-- test data can delet (end) -->
-
-                                </tbody>
-                            </table>
-
-                            <h3>Cumulative GPA</h3>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Cumulative GPA</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>3.5</td>
-                                    </tr>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="v-pills-ViewCourse" role="tabpanel"
-                        aria-labelledby="v-pills-ViewCourse-tab">
-                        <div class="container my-2">
-                            <h2 class="text-warning">View Courses</h2>
-                            <br />
+                </div>
 
-                            <div id="gpa-table">
-                                <h3>All Courses You Can Enrol</h3>
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th> CourseName </th>
-                                            <th> Credits</th>
-                                            <th> Capacity </th>
-                                            <th> Vacancy </th>
-                                            <th> Faculty </th>
-                                            <th class="text-sm"> Start Date </th>
-                                            <th class="text-sm"> End Date</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr th:each="course : ${courses}">
-                                            <td th:text="${course.course.courseName}"></td>
-                                            <td th:text="${course.course.courseCredits}"></td>
-                                            <td th:text="${course.courseCapacity}"></td>
-                                            <td th:text="${course.classroom.classRoomSize}"></td>
-                                            <td th:text="${course.course.faculty.facultyName}"></td>
-                                            <td th:text="${course.courseSchedule.schedule.scheduleStartTime}"></td>
-                                            <td th:text="${course.courseSchedule.schedule.scheduleEndTime}"></td>
-                                            <td> <a href="student-enrol-courses.html"
-                                                    th:href="@{/student/enrol/}+${student.id}"
-                                                    class="btn btn-warning">Go to Enrol</a>
-                                                <!-- <a href="lecturers.html" th:href="@{/lecturer/delete/}+${lecturer.id}"
-                                                                                                            class="btn btn-danger">Delete</a> -->
-                                            </td>
+                <div class="tab-pane fade" id="v-pills-EnrolForCourse" role="tabpanel"
+                     aria-labelledby="v-pills-EnrolForCourse-tab">
+                    <h2>Enrol for a Course Content</h2>
+                    <form action="#" th:action="@{/searchEnrollment}" th:object="${searchCourse}" method="get">
+                        <fieldset> Course Name:<input type="text" th:field="*{course.courseName}"
+                                                      class="form-control mb-4 col-4"></fieldset>
+                        <fieldset> Lecturer Name:<input type="text" th:field="*{lecturer.username}"
+                                                        class="form-control mb-4 col-4">
+                        </fieldset>
+                        <fieldset> Course Start Date:<input type="text" th:field="*{schedule.scheduleStartTime}"
+                                                            class="form-control mb-4 col-4">
+                        </fieldset>
+                        <fieldset> Course End Date:<input type="text" th:field="*{schedule.scheduleEndTime}"
+                                                          class="form-control mb-4 col-4">
+                        </fieldset>
+                        <button type="submit" class="btn btn-warning col-2">Search Courses</button>
+                    </form>
+                    <br/>
+                    <br/>
+                    <!-- 这里的课程表，在没有搜索之前，会显示所有该学生可以enrol的课，如果在搜索框输入一个或者多个搜索条件，下面的课程表只显示搜索内容 -->
+                    <div id="gpa-table">
+                        <h3>Courses Results</h3>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th> CourseName</th>
+                                <th> Credits</th>
+                                <th> Capacity</th>
+                                <th> enrolled</th>
+                                <th> Faculty</th>
+                                <th class="text-sm"> Start Date</th>
+                                <th class="text-sm"> End Date</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="course : ${courseEnrolled}">
+                                <!-- here id means S/N 序号 -->
+                                <td th:text="${course.course.courseName}"></td>
+                                <td th:text="${course.course.courseCredits}"></td>
+                                <td th:text="${course.getCourseCapacity()}"></td>
+                                <td th:text="${course.enrolled}"></td>
+                                <td th:text="${course.course.faculty.facultyName}"></td>
+                                <td th:text="${course.schedule.scheduleStartTime}"></td>
+                                <td th:text="${course.schedule.scheduleEndTime}"></td>
+                                <td>
+                                    <a th:href="@{/studentEnrolling/{studentId}/{courseLecturerId}(studentId=${session.id},courseLecturerId=${course.id})}"
+                                       class="btn btn-warning">Enrol</a>
+                                </td>
 
-                                        </tr>
-                                    </tbody>
-                                    <!-- test data, can delete -->
-                                    <tbody>
-                                        <tr>
-                                            <td>C001</td>
-                                            <td>Course 1</td>
-                                            <td>A</td>
-                                            <td>3</td>
-                                            <td>60</td>
-                                            <td>20</td>
-                                            <td>ISS</td>
-                                            <td style="width: 50%;">2023-02-03</td>
-                                            <td style="width: 50%;">2023-08-03</td>
-                                            <td>
-                                                <a href="student-enrol-courses.html"
-                                                    th:href="@{/student/enrol/}+${student.id}"
-                                                    class="btn btn-warning">Go to Enrol</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>C002</td>
-                                            <td>Course 2</td>
-                                            <td>B+</td>
-                                            <td>3</td>
-                                            <td>60</td>
-                                            <td>20</td>
-                                            <td>ISS</td>
-                                            <td style="width: 50%;">2023-02-03</td>
-                                            <td style="width: 50%;">2023-08-03</td>
-                                            <td>
-                                                <a href="student-enrol-courses.html"
-                                                    th:href="@{/student/enrol/}+${student.id}"
-                                                    class="btn btn-warning">Go to Enrol</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>C002</td>
-                                            <td>Course 2</td>
-                                            <td>B+</td>
-                                            <td>3</td>
-                                            <td>60</td>
-                                            <td>20</td>
-                                            <td>ISS</td>
-                                            <td style="width: 50%;">2023-02-03</td>
-                                            <td style="width: 50%;">2023-08-03</td>
-                                            <td>
-                                                <a href="student-enrol-courses.html"
-                                                    th:href="@{/student/enrol/}+${student.id}"
-                                                    class="btn btn-warning">Go to Enrol</a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                            </tr>
+                            </tbody>
+                            <!-- test data, can delete -->
+                        </table>
                     </div>
-<!--                    -->
-<!--                    <div class="tab-pane fade" id="v-pills-EnrolForCourse" role="tabpanel"-->
-<!--                        aria-labelledby="v-pills-EnrolForCourse-tab">-->
-<!--                        <h2>Enrol for a Course Content</h2>-->
-<!--                        <form action="#" th:action="@{/student/enrol}" th:object="${course}" method="get">-->
-
-<!--                            &lt;!&ndash; Add hidden form field to handle update &ndash;&gt;-->
-<!--                            &lt;!&ndash;-->
-<!--                            <input type="hidden" th:field="*{id}" />-->
-<!--                            <fieldset> Course ID: <input type="text" th:field="${course.}"-->
-<!--                                    class="form-control mb-4 col-4"> </fieldset>-->
-<!--                                    &ndash;&gt;-->
-<!--                            <fieldset> Course Name:<input type="text" th:field="*{course.courseName}"-->
-<!--                                    class="form-control mb-4 col-4"></fieldset>-->
-<!--                            <fieldset> Lecturer Name:<input type="text" th:field="*{lecturer.getFullName()}"-->
-<!--                                    class="form-control mb-4 col-4">-->
-<!--                            </fieldset>-->
-<!--                            <fieldset> Course Start Date:<input type="text" th:field="*{courseSchedule.schedule.scheduleStartTime}"-->
-<!--                                    class="form-control mb-4 col-4">-->
-<!--                            </fieldset>-->
-<!--                            <fieldset> Course End Date:<input type="text" th:field="*{courseSchedule.schedule.scheduleEndTime}"-->
-<!--                                    class="form-control mb-4 col-4">-->
-<!--                            </fieldset>-->
-<!--                            <button type="submit" class="btn btn-warning col-2">Search Courses</button>-->
-<!--                        </form>-->
-<!--                        <br />-->
-<!--                        <br />-->
-<!--                        &lt;!&ndash; 这里的课程表，在没有搜索之前，会显示所有该学生可以enrol的课，如果在搜索框输入一个或者多个搜索条件，下面的课程表只显示搜索内容 &ndash;&gt;-->
-<!--                        <div id="gpa-table">-->
-<!--                            <h3>Courses Results</h3>-->
-<!--                            <table class="table">-->
-<!--                                <thead>-->
-<!--                                    <tr>-->
-<!--                                        <th> S/N</th>-->
-<!--                                        <th> CourseId</th>-->
-<!--                                        <th> CourseName </th>-->
-<!--                                        <th> Credits</th>-->
-<!--                                        <th> Capacity </th>-->
-<!--                                        <th> Vacancy </th>-->
-<!--                                        <th> Faculty </th>-->
-<!--                                        <th class="text-sm"> Start Date </th>-->
-<!--                                        <th class="text-sm"> End Date</th>-->
-<!--                                        <th></th>-->
-<!--                                    </tr>-->
-<!--                                </thead>-->
-<!--                                <tbody>-->
-<!--                                    <tr th:each="course : ${courses}">-->
-<!--                                        &lt;!&ndash; here id means S/N 序号 &ndash;&gt;-->
-<!--                                        <td th:text="${course.id}"></td>-->
-<!--                                        <td th:text="${course.courseId}"></td>-->
-<!--                                        <td th:text="${course.courseName}"></td>-->
-<!--                                        <td th:text="${course.courseCredits}"></td>-->
-<!--                                        <td th:text="${course.courseCapacity}"></td>-->
-<!--                                        <td th:text="${course.courseVacancy}"></td>-->
-<!--                                        <td th:text="${course.faculty}"></td>-->
-<!--                                        <td th:text="${course.scheduleStartTime}"></td>-->
-<!--                                        <td th:text="${course.scheduleEndTime}"></td>-->
-<!--                                        <td> <a href="student-enrol-courses.html"-->
-<!--                                                th:href="@{/student/enrol/}+${student.id}"-->
-<!--                                                class="btn btn-warning">Enrol</a>-->
-<!--                                        </td>-->
-
-<!--                                    </tr>-->
-<!--                                </tbody>-->
-<!--                                &lt;!&ndash; test data, can delete &ndash;&gt;-->
-<!--                                <tbody>-->
-<!--                                    <tr>-->
-<!--                                        <td>C001</td>-->
-<!--                                        <td>Course 1</td>-->
-<!--                                        <td>A</td>-->
-<!--                                        <td>3</td>-->
-<!--                                        <td>60</td>-->
-<!--                                        <td>20</td>-->
-<!--                                        <td>ISS</td>-->
-<!--                                        <td style="width: 50%;">2023-02-03</td>-->
-<!--                                        <td style="width: 50%;">2023-08-03</td>-->
-<!--                                        <td>-->
-<!--                                            <a href="student-enrol-courses.html"-->
-<!--                                                th:href="@{/student/enrol/}+${student.id}"-->
-<!--                                                class="btn btn-warning">Enrol</a>-->
-<!--                                        </td>-->
-<!--                                    </tr>-->
-<!--                                </tbody>-->
-<!--                            </table>-->
-<!--                        </div>-->
-<!--                    </div>-->
+                </div>
 
 
-                    <div class="tab-pane fade" id="v-pills-Logout" role="tabpanel" aria-labelledby="v-pills-Logout-tab">
+                <div class="tab-pane fade" id="v-pills-Logout" role="tabpanel" aria-labelledby="v-pills-Logout-tab">
 
-                        <h2>Are you sure to logout?</h2>
-                        <a href="index.html" class="btn btn-warning">Confirm Logout</a>
-                    </div>
+                    <h2>Are you sure to logout?</h2>
+                    <a href="index.html" class="btn btn-warning">Confirm Logout</a>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
 </body>
 <footer class="footer">
     &copy; <span th:text="2023"></span> www.caps.edu.sg
-    <strong><img src="https://www.pinclipart.com/picdir/big/405-4059078_png-file-svg-transparent-white-home-button-clipart.png" width="20" height="20" hspace="10"> Address:</strong> 25 Huang Mei Keng Terrance, Singapore
-    <strong><img src ="https://cdn0.iconfinder.com/data/icons/mini-icon-2-2/16/telephone-512.png" width="20" height="20" hspace="10"> Contact Number:</strong> 1234567890
-    <strong><img src="https://cdn.iconscout.com/icon/premium/png-512-thumb/mail-1772981-1508923.png" width="20" height="20" hspace="10">Email:</strong> example@example.com
+    <strong><img
+            src="https://www.pinclipart.com/picdir/big/405-4059078_png-file-svg-transparent-white-home-button-clipart.png"
+            width="20" height="20" hspace="10"> Address:</strong> 25 Huang Mei Keng Terrance, Singapore
+    <strong><img src="https://cdn0.iconfinder.com/data/icons/mini-icon-2-2/16/telephone-512.png" width="20" height="20"
+                 hspace="10"> Contact Number:</strong> 1234567890
+    <strong><img src="https://cdn.iconscout.com/icon/premium/png-512-thumb/mail-1772981-1508923.png" width="20"
+                 height="20" hspace="10">Email:</strong> example@example.com
 </footer>
 
 </html>

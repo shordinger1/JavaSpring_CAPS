@@ -1,15 +1,18 @@
 package com.team4.caps.controller;
 
 import com.team4.caps.model.CourseLecturer;
+import com.team4.caps.model.CourseStudent;
 import com.team4.caps.service.CourseLecturerService;
 import com.team4.caps.service.CourseService;
 import com.team4.caps.service.CourseStudentService;
 import com.team4.caps.service.ScheduleService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -116,5 +119,48 @@ public class CourseLecturerController {
         var status = courseLecturerService.deleteCourseLecturerById(id);
         model.addAttribute("status", status);
         return "courseLecturers";
+    }
+
+
+    @GetMapping("/manageEnrollment")
+    public String enrollment(HttpSession session, ModelMap model)
+    {
+        Integer id= (Integer) session.getAttribute("id");
+        var courseAlreadyEnrolled=courseStudentService.getAllCourseStudents().stream().filter(courseStudent -> courseStudent.getStudent().getId()==id).map(CourseStudent::getCourseLecturer).toList();
+        var courseLecturer= new java.util.ArrayList<>(courseLecturerService.getAllCourseLecturers().stream().filter(courseLecturer1 -> courseLecturer1.getEnrolled() < courseLecturer1.getCourseCapacity()).toList());
+        courseLecturer.removeAll(courseAlreadyEnrolled);
+        model.addAttribute("search_courseLecturer",new CourseLecturer());
+        int totalPage= (int) (courseLecturer.size()/5);
+        model.addAttribute("pageData",courseLecturer);
+        model.addAttribute("totalPage",totalPage);
+        model.addAttribute("courseLecturers",courseLecturer);
+        return "student-enrol-course";
+    }
+
+
+    @PostMapping("/searchEnrollment")
+    public String enrollment(@ModelAttribute CourseLecturer search_courseLecturer,ModelMap model) throws IllegalAccessException {
+        var enrollmentCourseLecturer=courseLecturerService.getAllCourseLecturers();
+        for(var param:CourseLecturer.class.getDeclaredFields())
+        {
+            param.setAccessible(true);
+            if(param.get(search_courseLecturer)!=null)
+            {
+                enrollmentCourseLecturer=enrollmentCourseLecturer.stream().filter(courseLecturer1 -> {
+                    try {
+                        return param.get(courseLecturer1)==param.get(search_courseLecturer);
+                    } catch (IllegalAccessException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).toList();
+            }
+        }
+
+        int totalPage= (int) (enrollmentCourseLecturer.size()/5);
+        model.addAttribute("pageData",enrollmentCourseLecturer);
+        model.addAttribute("totalPage",totalPage);
+        model.addAttribute("search_courseLecturer",search_courseLecturer);
+        model.addAttribute("courseLecturers",enrollmentCourseLecturer);
+        return "student-enrol-course";
     }
 }
