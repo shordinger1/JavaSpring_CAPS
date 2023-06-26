@@ -5,9 +5,11 @@ import com.team4.caps.model.Lecturer;
 import com.team4.caps.model.Person;
 import com.team4.caps.model.Student;
 import com.team4.caps.service.LecturerService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Field;
@@ -75,8 +77,12 @@ public class LecturerController {
 
     //@PostMapping("")
     @PostMapping(value="/addLecturer")
-    public String createLecturer(@ModelAttribute Lecturer lecturer,Model model)
+    public String createLecturer(@Valid  @ModelAttribute Lecturer lecturer,BindingResult result,Model model)
     {
+        if(result.hasErrors())
+        {
+            return "lecturerform";
+        }
         System.out.println("coming in!");
         lecturer.setPassword(SecurityConfig.encoder("123456"));
         var status=lecturerService.createLecturer(lecturer);
@@ -88,7 +94,11 @@ public class LecturerController {
     }
 
     @PostMapping("/lecturer/update/{id}")
-    public String updateLecturer(@ModelAttribute Lecturer lecturer, @PathVariable Integer id, Model model) throws IllegalAccessException {
+    public String updateLecturer(@Valid @ModelAttribute Lecturer lecturer, BindingResult result, @PathVariable Integer id, Model model) throws IllegalAccessException {
+        if(result.hasErrors())
+        {
+            return "lecturer-edit";
+        }
         Lecturer lecturerBefore=lecturerService.getLecturerById(id);
         lecturer.setPassword(SecurityConfig.encoder(lecturer.getPassword()));
         List<Field> fieldList = new ArrayList<>();

@@ -4,10 +4,12 @@ import com.team4.caps.config.SecurityConfig;
 import com.team4.caps.model.Person;
 import com.team4.caps.model.Student;
 import com.team4.caps.service.StudentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Field;
@@ -65,8 +67,12 @@ public class StudentController {
 
     //@PostMapping("")
     @PostMapping(value="/addstudent",produces = "application/json")
-    public String createStudent(@ModelAttribute Student student,Model model)
+    public String createStudent(@Valid  @ModelAttribute Student student,BindingResult result,   Model model)
     {
+        if(result.hasErrors())
+        {
+            return "studentform";
+        }
         //System.out.println("114514");
         //Student student= (Student) model.getAttribute("student");
         student.setPassword(SecurityConfig.encoder("123456"));
@@ -81,7 +87,11 @@ public class StudentController {
     }
 
     @PostMapping("student/edit/{id}")
-    public String updateStudent(@ModelAttribute Student student, @PathVariable Integer id, Model model) throws IllegalAccessException {
+    public String updateStudent(@Valid @ModelAttribute Student student, BindingResult result, @PathVariable Integer id, Model model) throws IllegalAccessException {
+        if(result.hasErrors())
+        {
+            return "student-edit";
+        }
         var studentBefore=studentService.getStudentById(id);
         List<Field> fieldList = new ArrayList<>();
         fieldList.addAll(List.of(Student.class.getDeclaredFields()));

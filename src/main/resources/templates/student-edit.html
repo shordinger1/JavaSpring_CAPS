@@ -103,39 +103,82 @@
             </div>
         </div>
         <div class="col-9">
-    <div class="container">
-        <h1>Student Management System</h1>
-        <hr>
-        <h2>Update Student</h2>
+            <div class="container">
+                <h1>Student Management System</h1>
+                <hr>
+                <h2>Update Student</h2>
 
-        <form action="#" th:action="@{/student/edit/{id}(id=${student.id})}" th:object="${student}" method="post">
+                <form action="#" th:action="@{/student/edit/{id}(id=${student.id})}" th:object="${student}"
+                      method="post">
 
-            <!-- Add hidden form field to handle update -->
-            <input type="hidden" th:field="*{id}" />
+                    <!-- Add hidden form field to handle update -->
+                    <input type="hidden" th:field="*{id}"/>
+                    <fieldset>
 
-            <fieldset> First Name:<input type="text" th:field="*{firstname}" class="form-control mb-4 col-4"> </fieldset>
+                        <label>First Name:</label>
+                        <br/>
+                        <span th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}"
+                              style="color:red"></span>
 
-            <fieldset> Last Name:<input type="text" th:field="*{lastname}" class="form-control mb-4 col-4"></fieldset>
+                        <input type="text" th:field="*{firstname}" class="form-control mb-4 col-4">
 
-            <fieldset> Email-address:<input type="text" th:field="*{email}" class="form-control mb-4 col-4"></fieldset>
+                    </fieldset>
 
-            <fieldset> Phone Number:<input type="text" th:field="*{contactNumber}" class="form-control mb-4 col-4"></fieldset>
 
-            <fieldset> Address:<input type="text" th:field="*{address}" class="form-control mb-4 col-4"></fieldset>
+                    <fieldset>
+                        <label>Last Name:</label>
+                        <br/>
+                        <span th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}"
+                              style="color:red"></span></span>
+                        <input type="text" th:field="*{lastname}" class="form-control mb-4 col-4">
 
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+                    </fieldset>
 
-        <hr>
+                    <fieldset>
+                        <label>Address:</label>
+                        <br/>
+                        <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}" style="color:red"></span>
+                        <input type="text" th:field="*{address}" class="form-control mb-4 col-4">
 
-        <a th:href="@{/students}"> Back to Student List</a>
+                    </fieldset>
+
+                    <fieldset>
+                        <label>Contact Number:</label>
+                        <br/>
+                        <span th:if="${#fields.hasErrors('contactNumber')}" th:errors="*{contactNumber}"
+                              style="color:red"></span>
+                        <input type="text" th:field="*{contactNumber}" class="form-control mb-4 col-4">
+
+
+                    </fieldset>
+
+                    <fieldset>
+                        <label>Email Address:</label>
+                        <br/>
+                        <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color:red"></span>
+                        <input type="text" th:field="*{email}" class="form-control mb-4 col-4">
+                    </fieldset>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+
+                <hr>
+
+                <a th:href="@{/students}"> Back to Student List</a>
+            </div>
+        </div>
     </div>
+</div>
 </body>
 <footer class="footer">
     &copy; <span th:text="2023"></span> www.caps.edu.sg
-    <strong><img src="https://www.pinclipart.com/picdir/big/405-4059078_png-file-svg-transparent-white-home-button-clipart.png" width="20" height="20" hspace="10">Address:</strong> 25 Huang Mei Keng Terrance, Singapore
-    <strong><img src ="https://cdn0.iconfinder.com/data/icons/mini-icon-2-2/16/telephone-512.png" width="20" height="20" hspace="10"> Contact Number:</strong> 1234567890
-    <strong><img src="https://cdn.iconscout.com/icon/premium/png-512-thumb/mail-1772981-1508923.png" width="20" height="20" hspace="10">Email:</strong> Team-4@nus.iss.edu
+    <strong><img
+            src="https://www.pinclipart.com/picdir/big/405-4059078_png-file-svg-transparent-white-home-button-clipart.png"
+            width="20" height="20" hspace="10">Address:</strong> 25 Huang Mei Keng Terrance, Singapore
+    <strong><img src="https://cdn0.iconfinder.com/data/icons/mini-icon-2-2/16/telephone-512.png" width="20" height="20"
+                 hspace="10"> Contact Number:</strong> 1234567890
+    <strong><img src="https://cdn.iconscout.com/icon/premium/png-512-thumb/mail-1772981-1508923.png" width="20"
+                 height="20" hspace="10">Email:</strong> Team-4@nus.iss.edu
 </footer>
 
 </html>

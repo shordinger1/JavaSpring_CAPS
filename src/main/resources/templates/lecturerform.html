@@ -115,27 +115,56 @@
 
                     <!-- Add hidden form field to handle update -->
 
-                    <fieldset> First Name: <input type="text" th:field="*{firstname}" class="form-control mb-4 col-4">
+                    <fieldset>
+
+                        <label >First Name:</label>
+                        <br/>
+                        <span th:if="${#fields.hasErrors('firstname')}"th:errors="*{firstname}" style="color:red"></span>
+
+                        <input type="text" th:field="*{firstname}" class="form-control mb-4 col-4">
+
                     </fieldset>
 
-                    <fieldset> Last Name:<input type="text" th:field="*{lastname}" class="form-control mb-4 col-4">
+
+                    <fieldset>
+                        <label >Last Name:</label>
+                        <br/>
+                        <span th:if="${#fields.hasErrors('lastname')}"th:errors="*{lastname}" style="color:red"></span></span>
+                        <input type="text" th:field="*{lastname}" class="form-control mb-4 col-4">
+
                     </fieldset>
 
-                    <!--            radio button for gender-->
-
-                    <fieldset> Gender: <input type="radio" th:field="*{gender}" value="Male"/> Male
-                        <input type="radio" th:field="*{gender}" value="Female"/> Female
-                    </fieldset>
-
+                    <fieldset> Gender: <input type="radio" th:field="*{gender}" value="Male" /> Male
+                        <input type="radio" th:field="*{gender}" value="Female" /> Female</fieldset>
                     <br/>
-                    <fieldset> Address:<input type="text" th:field="*{address}" class="form-control mb-4 col-4">
+
+
+                    <fieldset>
+                        <label >Address:</label>
+                        <br/>
+                        <span th:if="${#fields.hasErrors('address')}"th:errors="*{address}"style="color:red"></span>
+                        <input type="text" th:field="*{address}" class="form-control mb-4 col-4">
+
                     </fieldset>
 
                     <fieldset> D.O.B:<input type="text" th:field="*{birthday}" class="form-control mb-4 col-4">
+
                     </fieldset>
 
-                    <fieldset> Phone Number:<input type="text" th:field="*{contactNumber}"
-                                                   class="form-control mb-4 col-4">
+                    <fieldset>
+                        <label >Contact Number:</label>
+                        <br/>
+                        <span th:if="${#fields.hasErrors('contactNumber')}"th:errors="*{contactNumber}"style="color:red"></span>
+                        <input type="text" th:field="*{contactNumber}" class="form-control mb-4 col-4">
+
+
+                    </fieldset>
+
+                    <fieldset>
+                        <label >Email Address:</label>
+                        <br/>
+                        <span th:if="${#fields.hasErrors('email')}"th:errors="*{email}"style="color:red"></span>
+                        <input type="text" th:field="*{email}" class="form-control mb-4 col-4">
                     </fieldset>
 
                     <button type="submit" class="btn btn-primary">Submit</button>
