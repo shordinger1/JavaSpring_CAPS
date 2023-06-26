@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 public class CourseService {
@@ -37,8 +36,8 @@ public class CourseService {
         return true;
     }
 
-    public Course createCourse(Course course) {
-        return courseRepository.save(course);
+    public void createCourse(Course course) {
+        courseRepository.save(course);
     }
 
     public boolean updateCourseById(Integer id,Course updatedCourse)

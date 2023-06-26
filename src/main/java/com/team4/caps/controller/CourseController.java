@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -52,6 +53,18 @@ public class CourseController {
         model.addAttribute("faculties",faculties);
         model.addAttribute("lecturers",lecturers);
         return "course-create";
+    }
+
+    @PostMapping("/course/create")
+    public String createCourse(@ModelAttribute Course course,  Model model)
+    {
+        //System.out.println(course.getFaculty().getId());
+        courseService.createCourse(course);
+        course.setFaculty(facultyService.getFacultyById(course.getFaculty().getId()));
+        List<Course> courses=new ArrayList<>();
+        courses.add(course);
+        model.addAttribute("courses",courses);
+        return "/courses";
     }
 
     //course admin update

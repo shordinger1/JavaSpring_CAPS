@@ -96,7 +96,7 @@ public class AdminController {
                     session.setAttribute("username", username);
                     session.setAttribute("type", type);
                 } else return "index";
-                return "redirect:/lecturer/course/"+lecturer.get(0).getId();
+                return "redirect:/lecturer/profile/"+lecturer.get(0).getId();
             }
             default -> {
                 return "index";

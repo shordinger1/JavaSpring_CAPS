@@ -78,10 +78,10 @@
          alt="Logo" width="60" height="60" class="logo-img">
     <a class="navbar-brand" style="color: white; font-size: 30px;">CAPS</a>
     <div class="moving-text">
-        <span th:text="|hello ${session.username}|"></span>
+        <span th:text="|Hello ${session.username}|"></span>
     </div>
 </nav>
-<div class="container">
+<div class="container-3">
     <div class="row">
         <div class="col-3">
             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
@@ -115,9 +115,9 @@
 
                     <!-- Add hidden form field to handle update -->
                     <input type="hidden" th:field="*{id}"/>
-                    <fieldset> Course ID: <input type="text" th:field="*{id}" class="form-control mb-4 col-4">
+                    <fieldset> Course Name: <input type="text" th:field="*{courseName}" class="form-control mb-4 col-4">
                     </fieldset>
-                    <fieldset> Course Name:<input type="text" th:field="*{courseName}"
+                    <fieldset> Course Credit:<input type="text" th:field="*{courseCredits}"
                                                   class="form-control mb-4 col-4"></fieldset>
                     <fieldset> Faculty:
                         <select th:field="*{faculty.id}">
@@ -145,7 +145,7 @@
     <strong><img src="https://cdn0.iconfinder.com/data/icons/mini-icon-2-2/16/telephone-512.png" width="20" height="20"
                  hspace="10"> Contact Number:</strong> 1234567890
     <strong><img src="https://cdn.iconscout.com/icon/premium/png-512-thumb/mail-1772981-1508923.png" width="20"
-                 height="20" hspace="10">Email:</strong> example@example.com
+                 height="20" hspace="10">Email:</strong> Team-4@nus.iss.edu
 </footer>
 
 </html>

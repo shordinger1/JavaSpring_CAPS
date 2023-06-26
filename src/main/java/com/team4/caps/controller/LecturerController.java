@@ -62,11 +62,21 @@ public class LecturerController {
         return "lecturers";
     }
 
+    @GetMapping("lecturer/profile/{id}")
+    public String GetOneLecturer2(@PathVariable Integer id,Model model)
+    {
+        var lecturer=lecturerService.getLecturerById(id);
+        //Lecturer.setPassword("000");
+        model.addAttribute("lecturer",lecturer);
+        return "lecturerProfile";
+    }
+
     //@PostMapping("")
     @PostMapping(value="/addLecturer")
     public String createLecturer(@ModelAttribute Lecturer lecturer,Model model)
     {
-        lecturer.setPassword(SecurityConfig.encoder(lecturer.getPassword()));
+        System.out.println("coming in!");
+        lecturer.setPassword(SecurityConfig.encoder("123456"));
         var status=lecturerService.createLecturer(lecturer);
         model.addAttribute("status",status);
         List<Lecturer> lecturers=new ArrayList<>();

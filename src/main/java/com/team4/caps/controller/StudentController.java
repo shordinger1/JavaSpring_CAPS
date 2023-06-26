@@ -67,7 +67,7 @@ public class StudentController {
     {
         //System.out.println("114514");
         //Student student= (Student) model.getAttribute("student");
-        student.setPassword(SecurityConfig.encoder(student.getPassword()));
+        student.setPassword(SecurityConfig.encoder("123456"));
         Date date=new Date();
         student.setEnrollmentDate((date.getTime()));
         var status=studentService.createStudent(student);

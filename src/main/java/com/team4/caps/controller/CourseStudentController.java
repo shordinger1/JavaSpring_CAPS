@@ -47,7 +47,7 @@ public class CourseStudentController {
     {
         var courseStudent=courseStudentService.getAllCourseStudents();
         if(id!=0) {
-             courseStudent=courseStudent.stream().filter(courseStudent1 -> courseStudent1.getCourseLecturer().getId() == id).toList();
+             courseStudent=courseStudent.stream().filter(courseStudent1 -> courseStudent1.getCourseLecturer().getId() == id && courseStudent1.getRequestStatus()<3).toList();
         }
         model.addAttribute("courseStudent",courseStudent);
         return "view-performance-students";
@@ -114,6 +114,7 @@ public class CourseStudentController {
         double credit=0.0;
         for(var c:courseStudents)
         {
+            if(c.getRequestStatus()!=2)continue;
             totol+=c.getGrade()*c.getCourseLecturer().getCourse().getCourseCredits();
             credit+=c.getCourseLecturer().getCourse().getCourseCredits();
         }
@@ -130,6 +131,7 @@ public class CourseStudentController {
         courseStudent.setCourseLecturer(courseLecturer);
         courseStudent.setStudent(studentService.getStudentById(studentId));
         courseStudent.setRequestStatus(0);
+        courseStudent.setGrade(0.0);
         courseStudentService.createCourseStudentById(courseStudent);
         boolean status=true;
         if(courseLecturer.getCourseCapacity()>courseLecturer.getEnrolled()){

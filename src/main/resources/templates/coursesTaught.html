@@ -27,9 +27,14 @@
 
             /* Additional styles as needed */
         }
+
         @keyframes bounce {
-            0%, 100% { transform: translateX(120%); }
-            50% { transform: translateX(0%); }
+            0%, 100% {
+                transform: translateX(120%);
+            }
+            50% {
+                transform: translateX(0%);
+            }
         }
 
         .navbar {
@@ -48,6 +53,7 @@
             font-size: 40px;
             color: white;
         }
+
         footer {
             position: fixed;
             left: 0;
@@ -76,24 +82,37 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="moving-text">
-        <span th:text="|hello ${session.username}|"></span>
+        <span th:text="|Hello ${session.username}|"></span>
     </div>
 </nav>
 
-<div class="container">
+<div class="container-3">
     <div class="row">
         <div class="col-3">
             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <p></p>
-                <a class="nav-link active" id="v-pills-ViewCoursesTaught-tab" data-toggle="pill" th:href="@{/lecturer/course/}+${session.id}" role="tab" aria-controls="v-pills-ViewCoursesTaught" aria-selected="true">View Courses Taught</a>
+                <a class="nav-link active" id="v-pills-Lecturer Profile" data-toggle="pills"
+                   th:href="@{/lecturer/profile/}+${session.id}"
+                   role="tab" aria-controls="v-pills-Lecturer Profile" aria-selected="false">Profile</a>
                 <p></p>
-                <a class="nav-link active" id="v-pills-View Course Enrolment" data-toggle="pill" th:href="@{/studentCourse/courseLecturer/}+|${session.id}/0|" role="tab" aria-controls="v-pills-ViewCourseEnrolment" aria-selected="true">View Course Enrolment</a>
+                <a class="nav-link active" id="v-pills-View Courses Taught" data-toggle="pills"
+                   th:href="@{/lecturer/course/}+${session.id}" role="tab" aria-controls="v-pills-View Courses Taught"
+                   aria-selected="true">View Courses Taught</a>
                 <p></p>
-                <a class="nav-link active" id="v-pills-Grade a Course" data-toggle="pill" th:href="@{/courseGrade/}+${session.id}" role="tab" aria-controls="v-pills-GradeACourse" aria-selected="true">Grade a Course</a>
+                <a class="nav-link active" id="v-pills-View Course Enrolment" data-toggle="pills"
+                   th:href="@{/studentCourse/courseLecturer/}+|${session.id}/0|" role="tab"
+                   aria-controls="v-pills-View Course Enrolment" aria-selected="false">View Course Enrolment</a>
                 <p></p>
-                <a class="nav-link active" id="v-pills-View a Student Performance" data-toggle="pill" th:href="@{/view-performance-students/0}" role="tab" aria-controls="v-pills-ViewAStudentPerformance" aria-selected="true">View a Student Performance</a>
+                <a class="nav-link active" id="v-pills-Grade a Course" data-toggle="pills"
+                   th:href="@{/courseGrade/}+${session.id}" role="tab" aria-controls="v-pills-Grade a Course"
+                   aria-selected="false">Grade a Course</a>
                 <p></p>
-                <a class="nav-link active" id="v-pills-Log Out" data-toggle="pill" th:href="@{/logout}" role="tab" aria-controls="v-pills-LogOut" aria-selected="true">Log Out</a>
+                <a class="nav-link active" id="v-pills-View a Student Performance" data-toggle="pills"
+                   th:href="@{/view-performance-students/0}" role="tab" aria-controls="v-pills-View a Student Performance"
+                   aria-selected="false">View a Student Performance</a>
+                <p></p>
+                <a class="nav-link active" id="v-pills-Log Out" data-toggle="pills" th:href="@{/logout}" role="tab"
+                   aria-controls="v-pills-Log Out" aria-selected="false">Log Out</a>
 
             </div>
         </div>
@@ -108,11 +127,11 @@
             <table border="1" class="table table-striped table-responsive-md">
                 <thead>
                 <tr>
-                    <th> Course ID </th>
+                    <th> Course ID</th>
                     <th> Course Name</th>
-                    <th> Course Capacity </th>
-                    <th> Current Enrolment </th>
-                    <th> </th>
+                    <th> Course Capacity</th>
+                    <th> Current Enrolment</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <body>
@@ -127,10 +146,14 @@
 
                     <!-- when user click view button that will go to view course enrolment page  -->
                     <td>
-                        <a th:href="@{/studentCourse/courseLecturer/{id}/{c_id}(id=${session.id},c_id=${courseLecturer.course.id})}" class="btn btn-secondary btn-sm mb-3" style="background-color: lightseagreen; border: none; color: white;">View enrolment details</a>
-                        <a th:href="@{/view-performance-students/{id}(id=${courseLecturer.id})}">
-                            view details
-                        </a>
+                        <a th:href="@{/studentCourse/courseLecturer/{id}/{c_id}(id=${session.id},c_id=${courseLecturer.course.id})}"
+                           class="btn btn-secondary btn-sm mb-3"
+                           style="background-color: lightseagreen; border: none; color: white;">
+                            View enrolment details</a>
+                        <a th:href="@{/view-performance-students/{id}(id=${courseLecturer.id})}"
+                           class="btn btn-secondary btn-sm mb-3"
+                           style="background-color: lightseagreen; border: none; color: white;">
+                            View student score</a>
                     </td>
                 </tr>
                 </body>
@@ -141,9 +164,13 @@
 </body>
 <footer class="footer">
     &copy; <span th:text="2023"></span> www.caps.edu.sg
-    <strong><img src="https://www.pinclipart.com/picdir/big/405-4059078_png-file-svg-transparent-white-home-button-clipart.png" width="20" height="20" hspace="10">Address: </strong> 25 Huang Mei Keng Terrance, Singapore
-    <strong><img src ="https://cdn0.iconfinder.com/data/icons/mini-icon-2-2/16/telephone-512.png" width="20" height="20" hspace="10"> Contact Number:</strong> 1234567890
-    <strong><img src="https://cdn.iconscout.com/icon/premium/png-512-thumb/mail-1772981-1508923.png" width="20" height="20" hspace="10">Email:</strong> example@example.com
+    <strong><img
+            src="https://www.pinclipart.com/picdir/big/405-4059078_png-file-svg-transparent-white-home-button-clipart.png"
+            width="20" height="20" hspace="10">Address: </strong> 25 Huang Mei Keng Terrance, Singapore
+    <strong><img src="https://cdn0.iconfinder.com/data/icons/mini-icon-2-2/16/telephone-512.png" width="20" height="20"
+                 hspace="10"> Contact Number:</strong> 1234567890
+    <strong><img src="https://cdn.iconscout.com/icon/premium/png-512-thumb/mail-1772981-1508923.png" width="20"
+                 height="20" hspace="10">Email:</strong> Team-4@nus.iss.edu
 </footer>
 
 
