@@ -1,6 +1,7 @@
 package com.team4.caps.controller;
 
 import com.team4.caps.config.SecurityConfig;
+import com.team4.caps.model.Person;
 import com.team4.caps.model.Student;
 import com.team4.caps.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -81,17 +83,21 @@ public class StudentController {
     @PostMapping("student/edit/{id}")
     public String updateStudent(@ModelAttribute Student student, @PathVariable Integer id, Model model) throws IllegalAccessException {
         var studentBefore=studentService.getStudentById(id);
-        for(var param:Student.class.getDeclaredFields())
+        List<Field> fieldList = new ArrayList<>();
+        fieldList.addAll(List.of(Student.class.getDeclaredFields()));
+        fieldList.addAll(List.of(Person.class.getDeclaredFields()));
+        for(var param:fieldList)
         {
             param.setAccessible(true);
-            if(param.get(student)!=null) {
-                param.set(student, param.get(studentBefore));
+            if(param.get(student)!=null&&param.get(student)!=param.get(studentBefore)) {
+                param.set(studentBefore, param.get(student));
             }
         }
-        student.setPassword(SecurityConfig.encoder(student.getPassword()));
-        var status=studentService.updateStudentById(id,student);
+        //student.setPassword(SecurityConfig.encoder(student.getPassword()));
+        System.out.println(student);
+        var status=studentService.updateStudentById(id,studentBefore);
         List<Student> students=new ArrayList<>();
-        students.add(student);
+        students.add(studentBefore);
         model.addAttribute("students",students);
         return "students";
     }

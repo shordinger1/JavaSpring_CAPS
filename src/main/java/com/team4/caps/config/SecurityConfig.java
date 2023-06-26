@@ -12,6 +12,7 @@ public class SecurityConfig {
 
     public static String encoder(String password)
     {
+        if(password==null)password="123456";
         long hashCode=47L;
         StringBuilder passwordBuilder = new StringBuilder(password);
         long before=47;

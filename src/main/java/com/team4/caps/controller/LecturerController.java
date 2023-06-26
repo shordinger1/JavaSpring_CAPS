@@ -2,6 +2,7 @@ package com.team4.caps.controller;
 
 import com.team4.caps.config.SecurityConfig;
 import com.team4.caps.model.Lecturer;
+import com.team4.caps.model.Person;
 import com.team4.caps.model.Student;
 import com.team4.caps.service.LecturerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -89,7 +91,10 @@ public class LecturerController {
     public String updateLecturer(@ModelAttribute Lecturer lecturer, @PathVariable Integer id, Model model) throws IllegalAccessException {
         Lecturer lecturerBefore=lecturerService.getLecturerById(id);
         lecturer.setPassword(SecurityConfig.encoder(lecturer.getPassword()));
-        for(var param:Lecturer.class.getDeclaredFields())
+        List<Field> fieldList = new ArrayList<>();
+        fieldList.addAll(List.of(Lecturer.class.getDeclaredFields()));
+        fieldList.addAll(List.of(Person.class.getDeclaredFields()));
+        for(var param:fieldList)
         {
             param.setAccessible(true);
             if(param.get(lecturer)!=null) {
