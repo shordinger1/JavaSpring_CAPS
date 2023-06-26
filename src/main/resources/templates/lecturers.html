@@ -81,7 +81,7 @@
         <span th:text="|hello ${session.username}|"></span>
     </div>
 </nav>
-<div class="container">
+<div class="container-3">
     <div class="row">
         <div class="col-3">
             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
@@ -98,7 +98,7 @@
                    aria-selected="true">Manage Courses</a>
                 <p></p>
                 <a class="nav-link active" id="v-pills-ManageEnrolment" data-toggle="pill"
-                   th:href="@{/studentCourse/courseLecturer/0/0}" role="tab" aria-controls="v-pills-ManageEnrolment"
+                   th:href="@{/adminEnrollment}" role="tab" aria-controls="v-pills-ManageEnrolment"
                    aria-selected="true">Manage Enrolment</a>
                 <p></p>
                 <a class="nav-link active" id="v-pills-Log Out" data-toggle="pill" th:href="@{/logout}" role="tab"

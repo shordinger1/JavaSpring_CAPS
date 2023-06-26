@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="ISO-8859-1">
+  <title>Manage Enrolment System</title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <style>
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateX(120%);
+      }
+      50% {
+        transform: translateX(0%);
+      }
+    }
+
+    .navbar {
+      overflow: hidden;
+    }
+
+    .navbar-brand,
+    .navbar-nav {
+      display: inline-block;
+    }
+
+    .moving-text {
+      display: inline-block;
+      white-space: nowrap;
+      animation: bounce 7s linear infinite;
+      font-size: 40px;
+      color: white;
+    }
+
+    /* Custom CSS for tab button colors */
+    .nav-pills .nav-link.active,
+    .nav-pills .show > .nav-link {
+      background-color: cornflowerblue;
+      color: white;
+    }
+
+    .nav-pills .nav-link {
+      color: cornflowerblue;
+    }
+
+    /* Set the wrapper as a flex container */
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Set the content to grow and push the footer to the bottom */
+    .content {
+      flex-grow: 4;
+    }
+
+    footer {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      background-color: lightgray; /* Adjust the background color as needed */
+      padding: 10px; /* Adjust the padding as needed */
+      text-align: center; /* Adjust the text alignment as needed */
+    }
+    .green-button {
+      background-color: green;
+    }
+
+  </style>
+</head>
+
+<body>
+<!--<nav class="navbar navbar-expand-md bg-dark navbar-dark">-->
+<nav class="navbar navbar-expand-md navbar-light" style="background-color: cornflowerblue;">
+  <!-- Brand -->
+  <img src="https://th.bing.com/th/id/R.12e91eada191070b23d272c2461d1d80?rik=aJDWMrh89h%2foTg&riu=http%3a%2f%2fcdn.onlinewebfonts.com%2fsvg%2fimg_554181.png&ehk=f9bsqbuePmFYo1Hsc%2b85jM8fsbZW7rmllZcpxuHG7h4%3d&risl=&pid=ImgRaw&r=0"
+       alt="Logo" width="60" height="60" class="logo-img">
+  <a class="navbar-brand" style="color: white; font-size: 30px;">CAPS</a>
+  <div class="moving-text">
+    <span>Hello Admin</span>
+  </div>
+</nav>
+<div class="container-3">
+  <div class="row">
+    <div class="col-3">
+      <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+        <p></p>
+        <a class="nav-link active" id="v-pills-Manage Student" data-toggle="pills" th:href="@{/students}"
+           role="tab" aria-controls="v-Manage Student" aria-selected="false">Manage Student</a>
+        <p></p>
+        <a class="nav-link active" id="v-pills-Manage Lecturer" data-toggle="pills"
+           th:href="@{/lecturers}" role="tab" aria-controls="v-Manage Lecturer"
+           aria-selected="false">Manage Lecturer</a>
+        <p></p>
+        <a class="nav-link active" id="v-pills-Manage Courses" data-toggle="pills"
+           th:href="@{/courses}" role="tab" aria-controls="v-Manage Courses"
+           aria-selected="false">Manage Courses</a>
+        <p></p>
+        <a class="nav-link active" id="v-pills-Manage Enrolment" data-toggle="pills"
+           th:href="@{/adminEnrollment}" role="tab" aria-controls="v-Manage Enrolment"
+           aria-selected="true">Manage Enrolment</a>
+        <p></p>
+        <a class="nav-link active" id="v-pills-Log Out" data-toggle="pills" th:href="@{/logout}" role="tab"
+           aria-controls="v-Log Out" aria-selected="false">Log Out</a>
+
+      </div>
+    </div>
+
+    <div class="col-8">
+      <div class="container">
+        <h1>Manage Student Enrolment</h1>
+        <table border="1" class="table table-striped table-responsive-md">
+          <thead>
+          <tr>
+            <th>Student ID</th>
+            <th>Student Name</th>
+            <th>Course Name</th>
+            <th>Course Credits</th>
+            <th>Enrolment Status</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+<!--          //this list will come from studentcourse table-->
+          <tr th:each="studentcourse : ${courses}">
+            <td th:text="${studentcourse.student.id}"></td>
+            <td th:text="${studentcourse.student.getFullName()}"></td>
+            <td th:text="${studentcourse.getCourseLecturer().course.courseName}"></td>
+            <td th:text="${studentcourse.getCourseLecturer().course.courseCredits}"></td>
+            <!--                        this stauts will come from cousestudent table-->
+            <td th:text="${studentcourse.status()}"></td>
+
+            <!--                        when click approve that will reload table and status will change-->
+            <td>
+              <a th:href="@{/courseStudent/changeStatus/{id}/1(id=${studentcourse.id})}" class="btn btn-primary green-button">Accept</a>
+              <!--when click Reject that will reload table and status will change-->
+              <a th:href="@{/courseStudent/changeStatus/{id}/3(id=${studentcourse.id})}" class="btn btn-danger">Reject</a>
+            </td>
+
+          </tr>
+          </tbody>
+        </table>
+
+
+        <hr>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<footer class="footer">
+  &copy; <span th:text="2023"></span> www.caps.edu.sg
+  <strong><img
+          src="https://www.pinclipart.com/picdir/big/405-4059078_png-file-svg-transparent-white-home-button-clipart.png"
+          width="20" height="20" hspace="10"> Address: </strong> 25 Huang Mei Keng Terrance, Singapore
+  <strong><img src="https://cdn0.iconfinder.com/data/icons/mini-icon-2-2/16/telephone-512.png" width="20" height="20"
+               hspace="10"> Contact Number:</strong> 1234567890
+  <strong><img src="https://cdn.iconscout.com/icon/premium/png-512-thumb/mail-1772981-1508923.png" width="20"
+               height="20" hspace="10">Email:</strong> example@example.com
+</footer>
+
+</html>

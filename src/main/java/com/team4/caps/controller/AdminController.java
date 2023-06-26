@@ -107,6 +107,7 @@ public class AdminController {
     @GetMapping("/ArrangeTheSchedule")
     public String adminArrange(Model model)
     {
+
         return "redirect:/courses";
     }
 

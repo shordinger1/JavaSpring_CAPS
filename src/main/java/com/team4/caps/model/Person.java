@@ -13,26 +13,26 @@ public class Person {
     public Person() {
 
     }
-    private String firstname="_";
+    private String firstname;
 
-    private String lastname="_";
+    private String lastname;
 
-    private String gender="_";
+    private String gender;
     @Temporal(TemporalType.DATE)
-    private Long birthday= (long) -1;
+    private Long birthday;
 
     //@Column(unique = true)
-    private String username="_";
+    private String username;
 
-    private String password="_";
+    private String password;
 
-    private String surname="_";
+    private String surname;
 
-    private String email="_";
+    private String email;
 
-    private String address="_";
+    private String address;
 
-    private String contactNumber="_";
+    private String contactNumber;
 
     public String getFullName()
     {

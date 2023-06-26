@@ -72,6 +72,15 @@ public class CourseStudentController {
         //ystem.out.println(courseStudent);
         return "viewcourse-enrolment";
     }
+
+    @GetMapping("/adminEnrollment")
+    public String GetAllCourseStudent(Model model)
+    {
+        var courseStudents=courseStudentService.getAllCourseStudents().
+                stream().filter(courseStudent -> courseStudent.getRequestStatus()==0).toList();
+        model.addAttribute("courses",courseStudents);
+        return "admin-enroll-management";
+    }
 //for grade student
     @GetMapping("/grade-course-students/{id}")
     public String GetAllCourseStudentByCourseLecturerId2(@PathVariable Integer id,Model model)
@@ -131,13 +140,14 @@ public class CourseStudentController {
         return "/studentIndex";
     }
 
-//    @GetMapping ("/StudentCourse/delete/{id}")
-//    public String deleteCourseStudent(@PathVariable Integer id,Model model)
-//    {
-//        var status=courseStudentService.deleteCourseStudentById(id);
-//        model.addAttribute("status",status);
-//        return "courseStudents";
-//    }
+    @GetMapping("/courseStudent/changeStatus/{id}/{status}")
+    public String updateStatus(Model model, @PathVariable Integer id, @PathVariable Integer status)
+    {
+        CourseStudent courseStudent=courseStudentService.getCourseStudentById(id);
+        courseStudent.setRequestStatus(status);
+        return "redirect:/adminEnrollment";
+    }
+
 
     @PostMapping("/studentCourse/save/{courseId}")
     public ResponseEntity<Boolean> createCourseStudentByUsernameAndCourseId(@PathVariable("courseId") int courseId, HttpServletRequest request) {

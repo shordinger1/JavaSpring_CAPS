@@ -13,8 +13,8 @@ public class ScheduleArrangement {
         this.classroomService = classroomService;
         this.scheduleService=scheduleService;
     }
-
-
+//
+//
 //    public Boolean generate()
 //    {
 //        var courseLecturers= courseLecturerService.getAllCourseLecturers();
@@ -58,8 +58,8 @@ public class ScheduleArrangement {
 //        }
 //        return true;
 //    }
-
-
+//
+//
 //        public List<Integer> generateTime() {
 //            Random random = new Random();
 //            List<Integer> result=new ArrayList<>();

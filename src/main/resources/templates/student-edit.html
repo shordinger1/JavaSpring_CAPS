@@ -95,7 +95,7 @@
                    aria-selected="true">Manage Courses</a>
                 <p></p>
                 <a class="nav-link active" id="v-pills-ManageEnrolment" data-toggle="pill"
-                   th:href="@{/studentCourse/courseLecturer/0/0}" role="tab" aria-controls="v-pills-ManageEnrolment"
+                   th:href="@{/adminEnrollment}" role="tab" aria-controls="v-pills-ManageEnrolment"
                    aria-selected="true">Manage Enrolment</a>
                 <p></p>
                 <a class="nav-link active" id="v-pills-Log Out" data-toggle="pill" th:href="@{/logout}" role="tab"
@@ -117,14 +117,11 @@
 
             <fieldset> Last Name:<input type="text" th:field="*{lastname}" class="form-control mb-4 col-4"></fieldset>
 
-            //i dont thin we need to update gender, so I took it out, is that ok???
-
-
-            <fieldset> Address:<input type="text" th:field="*{address}" class="form-control mb-4 col-4"></fieldset>
-
-            <fieldset> D.O.B:<input type="text" th:field="*{birthday}" class="form-control mb-4 col-4"></fieldset>
+            <fieldset> Email-address:<input type="text" th:field="*{email}" class="form-control mb-4 col-4"></fieldset>
 
             <fieldset> Phone Number:<input type="text" th:field="*{contactNumber}" class="form-control mb-4 col-4"></fieldset>
+
+            <fieldset> Address:<input type="text" th:field="*{address}" class="form-control mb-4 col-4"></fieldset>
 
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
