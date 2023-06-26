@@ -13,4 +13,6 @@ public class Classroom {
     private String classRoomName="_";
 
     private Integer classRoomSize=-1;
+
+    private Integer classRoomVacancy;
 }

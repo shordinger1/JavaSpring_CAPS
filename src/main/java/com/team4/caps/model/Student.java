@@ -1,9 +1,9 @@
 package com.team4.caps.model;
-import jakarta.persistence.*;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
-
-import java.util.Date;
 
 
 @Entity
@@ -16,10 +16,6 @@ public class Student extends Person{
     private Faculty studentfaculty;
 
     private Float gpa=0.0F;
-
-    public Student() {
-
-    }
 
 
 }

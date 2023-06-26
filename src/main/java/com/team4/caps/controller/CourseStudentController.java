@@ -5,12 +5,16 @@ import com.team4.caps.model.CourseStudent;
 import com.team4.caps.service.CourseLecturerService;
 import com.team4.caps.service.CourseStudentService;
 import com.team4.caps.service.StudentService;
-import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -134,4 +138,15 @@ public class CourseStudentController {
 //        model.addAttribute("status",status);
 //        return "courseStudents";
 //    }
+
+    @PostMapping("/studentCourse/save/{courseId}")
+    public ResponseEntity<Boolean> createCourseStudentByUsernameAndCourseId(@PathVariable("courseId") int courseId, HttpServletRequest request) {
+        try {
+            CourseStudent courseStudent = courseStudentService.createCourseStudentByUsernameAndCourseId(courseId, request);
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(false,HttpStatus.OK);
+        }
+    }
 }

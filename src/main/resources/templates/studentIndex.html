@@ -4,6 +4,8 @@
 <head>
     <title>Student Landing page</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script th:src="@{/js/myPagination.js}"></script>
 
     <style>
         /* Custom CSS for tab button colors */
@@ -53,6 +55,7 @@
             text-align: center; /* Adjust the text alignment as needed */
         }
     </style>
+
 </head>
 <body>
 <nav class="navbar navbar-expand-md navbar-light" style="background-color: orange;">
@@ -137,8 +140,8 @@
                             </tr>
                             </tbody>
                         </table>
-                        <a href="student-update-profile.html" th:href="@{/student}+${student.id}"
-                           class="btn btn-warning">Update Profile</a>
+                        <a href="student-update-profile.html" th:href="@{/student/uodateProfile}"
+                           class="btn btn-warning"><span id="updateProfile">Update Profile</span></a>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="v-pills-GPAandGrades" role="tabpanel"
@@ -165,11 +168,6 @@
                                 </td>
                                 <td class="courselist" th:text="${course__.getGrade()}">Grade</td>
                             </tr>
-
-                            <!-- test data can delete (start) -->
-                            <!-- Add more rows as needed -->
-                            <!-- test data can delet (end) -->
-
                             </tbody>
                         </table>
 
@@ -195,7 +193,7 @@
                         <br/>
 
                         <div id="gpa-table">
-                            <h3>All Courses You Can Enrol</h3>
+                            <h3>All Courses You already Enrolled</h3>
                             <table class="table">
                                 <thead>
                                 <tr>
@@ -220,77 +218,80 @@
                                     <td th:text="${course.courseLecturer.schedule.scheduleStartTime}"></td>
                                     <td th:text="${course.courseLecturer.schedule.scheduleEndTime}"></td>
                                     <td th:text="${course.status()}"></td>
-                                        <!-- <a href="lecturers.html" th:href="@{/lecturer/delete/}+${lecturer.id}"
-                                                                                                    class="btn btn-danger">Delete</a> -->
                                     </td>
-
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-
                 <div class="tab-pane fade" id="v-pills-EnrolForCourse" role="tabpanel"
                      aria-labelledby="v-pills-EnrolForCourse-tab">
-                    <h2>Enrol for a Course Content</h2>
-                    <form action="#" th:action="@{/searchEnrollment}" th:object="${searchCourse}" method="get">
-                        <fieldset> Course Name:<input type="text" th:field="*{course.courseName}"
-                                                      class="form-control mb-4 col-4"></fieldset>
-                        <fieldset> Lecturer Name:<input type="text" th:field="*{lecturer.username}"
-                                                        class="form-control mb-4 col-4">
-                        </fieldset>
-                        <fieldset> Course Start Date:<input type="text" th:field="*{schedule.scheduleStartTime}"
-                                                            class="form-control mb-4 col-4">
-                        </fieldset>
-                        <fieldset> Course End Date:<input type="text" th:field="*{schedule.scheduleEndTime}"
-                                                          class="form-control mb-4 col-4">
-                        </fieldset>
-                        <button type="submit" class="btn btn-warning col-2">Search Courses</button>
+                    <h2>Enrol for a Course</h2>
+                    <h3 class="text-warning">Search for Enrolling Courses</h3>
+                    <form class="row g-3" id="searchForm">
+                        <div class="col-md-6">
+                            <label for="courseName">Course Name:</label>
+                            <input type="text" class="form-control" id="courseName" name="courseName">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="lecturerName">Lecturer Name:</label>
+                            <input type="text" class="form-control" id="lecturerName" name="lecturerName">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="courseStartDate">Course Start Date:</label>
+                            <input type="date" class="form-control" id="courseStartDate"
+                                   name="courseStartDate">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="courseEndDate">Course End Date:</label>
+                            <input type="date" class="form-control" id="courseEndDate" name="courseEndDate">
+                            <br />
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-warning">Search</button>
+                            <button type="button" class="btn btn-secondary" id="resetButton">Reset</button>
+                        </div>
                     </form>
-                    <br/>
-                    <br/>
-                    <!-- 这里的课程表，在没有搜索之前，会显示所有该学生可以enrol的课，如果在搜索框输入一个或者多个搜索条件，下面的课程表只显示搜索内容 -->
-                    <div id="gpa-table">
-                        <h3>Courses Results</h3>
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th> CourseName</th>
-                                <th> Credits</th>
-                                <th> Capacity</th>
-                                <th> enrolled</th>
-                                <th> Faculty</th>
-                                <th class="text-sm"> Start Date</th>
-                                <th class="text-sm"> End Date</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="course : ${courseEnrolled}">
-                                <!-- here id means S/N 序号 -->
-                                <td th:text="${course.course.courseName}"></td>
-                                <td th:text="${course.course.courseCredits}"></td>
-                                <td th:text="${course.getCourseCapacity()}"></td>
-                                <td th:text="${course.enrolled}"></td>
-                                <td th:text="${course.course.faculty.facultyName}"></td>
-                                <td th:text="${course.schedule.scheduleStartTime}"></td>
-                                <td th:text="${course.schedule.scheduleEndTime}"></td>
-                                <td>
-                                    <a th:href="@{/studentEnrolling/{studentId}/{courseLecturerId}(studentId=${session.id},courseLecturerId=${course.id})}"
-                                       class="btn btn-warning">Enrol</a>
-                                </td>
-
-                            </tr>
-                            </tbody>
-                            <!-- test data, can delete -->
-                        </table>
+                    <br />
+                    <br />
+                    <!-- display all corses student can enrol.
+                    Those courses already been enrolled by this student cannot show on this page. -->
+                    <div id="courseList">
+                        <div id="gpa-table">
+                            <h3>Courses Results</h3>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th> S/N</th>
+                                    <!-- <th> CourseId</th> -->
+                                    <th> CourseName </th>
+                                    <th> Credits</th>
+                                    <th> Capacity </th>
+                                    <th> Vacancy </th>
+                                    <th> Faculty </th>
+                                    <th> Start Date </th>
+                                    <th> End Date</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody id="tbodyData">
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
+                    <nav aria-label="Page navigation">
+                        <ul id="pagination" class="pagination justify-content-center">
+                            <li id="pageStart" class="page-item">
+                                <span class="page-link pageStart"> &laquo; </span>
+                            </li>
+                            <li id="pageEnd" class="page-item">
+                                <span class="page-link pageEnd" href="#"> &raquo; </span>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
-
-
                 <div class="tab-pane fade" id="v-pills-Logout" role="tabpanel" aria-labelledby="v-pills-Logout-tab">
-
                     <h2>Are you sure to logout?</h2>
                     <a href="index.html" class="btn btn-warning">Confirm Logout</a>
                 </div>
@@ -299,7 +300,7 @@
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
 </body>

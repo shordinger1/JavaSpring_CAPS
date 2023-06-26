@@ -10,6 +10,9 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY )
     private int id;
 
+    public Person() {
+
+    }
     private String firstname="_";
 
     private String lastname="_";

@@ -1,11 +1,14 @@
 package com.team4.caps.service;
 
-import com.team4.caps.model.CourseLecturer;
-import com.team4.caps.model.CourseStudent;
-import com.team4.caps.repository.CourseLecturerRepository;
+import com.team4.caps.model.*;
+import com.team4.caps.repository.ClassroomRepository;
+import com.team4.caps.repository.CourseRepository;
 import com.team4.caps.repository.CourseStudentRepository;
+import com.team4.caps.repository.StudentRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,12 +17,23 @@ public class CourseStudentService {
 
     private final CourseStudentRepository courseStudentRepository;
     private final CourseLecturerService courseLecturerService;
+    private final StudentRepository studentRepository;
+    private final CourseRepository courseRepository;
+    private final ClassroomRepository classroomRepository;
 
     @Autowired
-    public CourseStudentService(CourseStudentRepository courseStudentRepository, CourseLecturerService courseLecturerService) {
+    public CourseStudentService(CourseStudentRepository courseStudentRepository,
+                                CourseLecturerService courseLecturerService,
+                                StudentRepository studentRepository,
+                                CourseRepository courseRepository,
+                                ClassroomRepository classroomRepository) {
         this.courseStudentRepository = courseStudentRepository;
         this.courseLecturerService = courseLecturerService;
+        this.studentRepository = studentRepository;
+        this.courseRepository = courseRepository;
+        this.classroomRepository = classroomRepository;
     }
+
     public List<CourseStudent> getAllCourseStudents()
     {
         return courseStudentRepository.findAll();
@@ -58,4 +72,26 @@ public class CourseStudentService {
         courseStudentRepository.save(courseStudent);
         return true;
     }
+
+    @Transactional
+    public CourseStudent createCourseStudentByUsernameAndCourseId(int courseId, HttpServletRequest request) throws Exception {
+        String username = (String)request.getSession().getAttribute("username");
+        Student student = studentRepository.findStudentByUsername(username);
+
+        Course course = courseRepository.findById(courseId).get();
+        CourseLecturer courseLecturer = courseLecturerService.getCourseLecturerByCourseId(courseId);
+        Classroom classroom = courseLecturer.getClassroom();
+        int vacancy = classroom.getClassRoomVacancy();
+        vacancy -= 1;
+        classroom.setClassRoomVacancy(vacancy);
+        classroomRepository.save(classroom);
+
+        CourseStudent courseStudent = new CourseStudent();
+        courseStudent.setStudent(student);
+        courseStudent.setCourseLecturer(courseLecturer);
+        courseStudent.setRequestStatus(0);
+        courseStudentRepository.save(courseStudent);
+        return courseStudent;
+    }
+
 }

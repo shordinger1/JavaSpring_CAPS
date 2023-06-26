@@ -1,13 +1,11 @@
 package com.team4.caps.service;
 
 import com.team4.caps.model.CourseLecturer;
+import com.team4.caps.repository.CourseLecturerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.team4.caps.repository.CourseLecturerRepository;
-
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 public class CourseLecturerService{
@@ -52,4 +50,7 @@ public class CourseLecturerService{
         return true;
     }
 
+    public CourseLecturer getCourseLecturerByCourseId(int id) {
+        return courseLecturerRepository.getCourseLecturerByCourseId(id);
+    }
 }

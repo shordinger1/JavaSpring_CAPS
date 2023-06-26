@@ -3,6 +3,8 @@ package com.team4.caps.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Date;
+
 @Entity
 @Data
 public class CourseStudent {
@@ -22,6 +24,8 @@ public class CourseStudent {
 
     //0-pending,1-accepted,2-completed,3-rejected,4-banned
     private Integer requestStatus;
+
+    private Date enrollmentEndDate;
 
     public String status()
     {

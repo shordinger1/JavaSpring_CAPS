@@ -36,21 +36,23 @@ $(function () {
 
 function searchCourses(pageNumber, refreshPageNumber) {
     var fields = $('#searchForm').serializeArray();
-    console.log(fields)
+    //console.log(fields)
     var params = {};
     $.each(fields, function (index, field) {
         params[field.name] = field.value;
     })
     params['pageNumber'] = pageNumber;
-    console.log(params)
+    params['pageSize'] = 3;
+    //console.log(params)
     var jsonParam = JSON.stringify(params);
-    console.log(jsonParam);
+    //console.log(jsonParam);
     $.ajax({
-        url: 'http://localhost:8080/searchEnrollment', //替换路径
+        url: 'enrollment/search', //替换路径
         type: 'POST',
         contentType: 'application/json',
         data: jsonParam,
         success: function (response) {
+            console.log(response)
             updateTable(response.pageData);
             if (refreshPageNumber) {
                 totalPage = response.totalPage
@@ -94,12 +96,12 @@ function updateTable(results) {
     } else {
         $.each(results, function (index, course) {
             var row = '<tr>' +
-                '<td>' + course.id + '</td>' +
-                //'<td>' + course.courseId + '</td>' +
+                '<td>' + (index+1) + '</td>' +
+                // '<td>' + index + '</td>' +
                 '<td>' + course.courseName + '</td>' +
-                //'<td>' + course.courseCredits + '</td>' +
-                //'<td>' + course.courseCapacity + '</td>' +
-                //'<td>' + course.courseVacancy + '</td>' +
+                '<td>' + course.courseCredits + '</td>' +
+                '<td>' + course.courseCapacity + '</td>' +
+                '<td>' + course.courseVacancy + '</td>' +
                 '<td>' + course.faculty + '</td>' +
                 '<td>' + course.courseStartDate + '</td>' +
                 '<td>' + course.courseEndDate + '</td>' +
@@ -114,11 +116,11 @@ function updateTable(results) {
 function enrolCourses(courseId) {
     console.log(courseId)
     $.ajax({
-        url: 'http://localhost:8080/course-students/save/' + courseId, //这里路径需要替换
+        url: '/studentCourse/save/' + courseId, //这里路径需要替换
         type: 'POST',
         success: function (response) { // 返回true 选课成功, false选课失败
             alert("Enrolled successfuly.");
-            searchCourses(1, true)
+            searchCourses(1, true) // reload table after enrolled successfully
         },
         error: function (xhr, status, error) {
             alert("Erolled failed.");

@@ -14,10 +14,10 @@ public class Schedule{
     private int id;
 
     private Integer scheduleDayOfWeek;
-    private Integer scheduleStartTime;
-    private Integer scheduleEndTime;
+    private Date scheduleStartTime;
+    private Date scheduleEndTime;
 
-    public Schedule(int id, Integer scheduleDayOfWeek, Integer scheduleStartTime, Integer scheduleEndTime) {
+    public Schedule(int id, Integer scheduleDayOfWeek, Date scheduleStartTime, Date scheduleEndTime) {
         this.id = id;
         this.scheduleDayOfWeek = scheduleDayOfWeek;
         this.scheduleStartTime = scheduleStartTime;
@@ -26,9 +26,9 @@ public class Schedule{
 
     public Schedule() {
         //id=1;
-        scheduleEndTime=-1;
-        scheduleDayOfWeek=-1;
-        scheduleStartTime=-1;
+//        scheduleEndTime= ;
+//        scheduleDayOfWeek=-1;
+//        scheduleStartTime=-1;
 
     }
 

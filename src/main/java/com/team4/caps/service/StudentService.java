@@ -71,6 +71,14 @@ public class StudentService {
         return null;
     }
 
+//    @PostMapping("/student/uodateProfile")
+//    public Student updateStudentByUsername(HttpSession session) {
+//        String username = (String)session.getAttribute("username");
+//        Student originStudent = studentRepository.findStudentByUsername(username);
+//        Student newStudent = new Student();
+//        newStudent.setUsername();
+//
+//    }
 
 }
 
